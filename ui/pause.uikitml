@@ -1,0 +1,42 @@
+<style>
+  .pause-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3;
+    background-color: rgba(0, 0, 0, 0.9);
+    border-color: #ffaa00;
+    border-width: 0.15;
+    border-radius: 1.5;
+    gap: 2;
+  }
+  .pause-title {
+    font-size: 4;
+    color: #ffaa00;
+    font-weight: bold;
+  }
+  .pause-btn {
+    font-size: 2;
+    color: #ffffff;
+    background-color: rgba(255, 170, 0, 0.2);
+    padding: 1;
+    padding-left: 3;
+    padding-right: 3;
+    border-color: #ffaa00;
+    border-width: 0.08;
+    border-radius: 0.5;
+    cursor: pointer;
+    width: 70%;
+    display: flex;
+    justify-content: center;
+  }
+  .quit-btn {
+    background-color: rgba(255, 51, 68, 0.2);
+    border-color: #ff3344;
+  }
+</style>
+<div class="pause-panel">
+  <span class="pause-title">PAUSED</span>
+  <div id="btn-resume" class="pause-btn" cursor="pointer">RESUME</div>
+  <div id="btn-quit" class="pause-btn quit-btn" cursor="pointer">QUIT</div>
+</div>

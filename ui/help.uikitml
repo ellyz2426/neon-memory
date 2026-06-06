@@ -1,0 +1,55 @@
+<style>
+  .help-panel {
+    display: flex;
+    flex-direction: column;
+    padding: 2;
+    background-color: rgba(0, 0, 0, 0.9);
+    border-color: #4488ff;
+    border-width: 0.15;
+    border-radius: 1.5;
+    gap: 1;
+  }
+  .help-title {
+    font-size: 3;
+    color: #4488ff;
+    font-weight: bold;
+  }
+  .help-section {
+    font-size: 1.6;
+    color: #00ffff;
+    font-weight: bold;
+  }
+  .help-text {
+    font-size: 1.2;
+    color: #aaaaaa;
+  }
+  .back-btn {
+    font-size: 1.6;
+    color: #888888;
+    background-color: rgba(128, 128, 128, 0.1);
+    padding: 0.6;
+    padding-left: 2;
+    padding-right: 2;
+    border-color: #555555;
+    border-width: 0.06;
+    border-radius: 0.4;
+    cursor: pointer;
+    align-self: center;
+  }
+</style>
+<div class="help-panel">
+  <span class="help-title">HOW TO PLAY</span>
+  <span class="help-section">Gameplay</span>
+  <span class="help-text">Watch the panels light up in sequence, then repeat the pattern. Each round adds one more step. Miss too many and it is game over!</span>
+  <span class="help-section">Browser Controls</span>
+  <span class="help-text">Click panels to select them. Press 1-9 keys for quick panel select. ESC to pause. R to rematch.</span>
+  <span class="help-section">VR Controls</span>
+  <span class="help-text">Point controller at panels and pull trigger. B button to pause. Laser pointer for menu buttons.</span>
+  <span class="help-section">Modes</span>
+  <span class="help-text">Classic: Growing sequence. Speed: Faster each round. Reverse: Repeat backwards. Rush: 60 second time limit. Zen: No lives. Daily: Same puzzle for everyone. Survival: One mistake. Marathon: Reach level 50.</span>
+  <span class="help-section">Layouts</span>
+  <span class="help-text">Choose 4 to 12 panels. More panels = harder to remember which one lit up!</span>
+  <span class="help-section">Scoring</span>
+  <span class="help-text">Points per correct hit increase with level and combo. Complete rounds for bonus points. Build combos for multipliers!</span>
+  <div id="btn-help-back" class="back-btn" cursor="pointer">BACK</div>
+</div>

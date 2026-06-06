@@ -1,0 +1,65 @@
+<style>
+  .title-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3;
+    padding-top: 4;
+    padding-bottom: 4;
+    background-color: rgba(0, 0, 0, 0.85);
+    border-color: #00ffff;
+    border-width: 0.15;
+    border-radius: 1.5;
+    gap: 1.5;
+  }
+  .game-title {
+    font-size: 4;
+    color: #00ffff;
+    font-weight: bold;
+  }
+  .game-subtitle {
+    font-size: 1.8;
+    color: #ff00ff;
+  }
+  .btn-row {
+    display: flex;
+    flex-direction: column;
+    gap: 1;
+    width: 100%;
+    align-items: center;
+  }
+  .menu-btn {
+    font-size: 2;
+    color: #ffffff;
+    background-color: rgba(0, 255, 255, 0.15);
+    padding: 1;
+    padding-left: 3;
+    padding-right: 3;
+    border-color: #00ffff;
+    border-width: 0.08;
+    border-radius: 0.5;
+    cursor: pointer;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+  }
+  .btn-scores { border-color: #ffaa00; background-color: rgba(255, 170, 0, 0.15); }
+  .btn-ach { border-color: #ff00ff; background-color: rgba(255, 0, 255, 0.15); }
+  .btn-stats { border-color: #00ff44; background-color: rgba(0, 255, 68, 0.15); }
+  .btn-skins { border-color: #ff4488; background-color: rgba(255, 68, 136, 0.15); }
+  .btn-set { border-color: #aa44ff; background-color: rgba(170, 68, 255, 0.15); }
+  .btn-help-style { border-color: #4488ff; background-color: rgba(68, 136, 255, 0.15); }
+</style>
+<div class="title-panel">
+  <span class="game-title">NEON MEMORY</span>
+  <span class="game-subtitle">3D Simon Says</span>
+  <div class="btn-row">
+    <div id="btn-play" class="menu-btn" cursor="pointer">PLAY</div>
+    <div id="btn-scores" class="menu-btn btn-scores" cursor="pointer">SCORES</div>
+    <div id="btn-achievements" class="menu-btn btn-ach" cursor="pointer">ACHIEVEMENTS</div>
+    <div id="btn-stats" class="menu-btn btn-stats" cursor="pointer">STATS</div>
+    <div id="btn-skins" class="menu-btn btn-skins" cursor="pointer">PANEL SKINS</div>
+    <div id="btn-settings" class="menu-btn btn-set" cursor="pointer">SETTINGS</div>
+    <div id="btn-help" class="menu-btn btn-help-style" cursor="pointer">HELP</div>
+  </div>
+</div>

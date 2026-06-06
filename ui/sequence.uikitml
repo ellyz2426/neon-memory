@@ -1,0 +1,20 @@
+<style>
+  .seq-panel {
+    display: flex;
+    padding: 1;
+    padding-left: 2;
+    padding-right: 2;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-color: #ff00ff;
+    border-width: 0.06;
+    border-radius: 0.5;
+  }
+  .seq-text {
+    font-size: 1.5;
+    color: #ff00ff;
+    font-weight: bold;
+  }
+</style>
+<div class="seq-panel">
+  <span id="seq-text" class="seq-text">WATCH...</span>
+</div>

@@ -1,0 +1,20 @@
+<style>
+  .cd-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-color: #00ffff;
+    border-width: 0.15;
+    border-radius: 2;
+  }
+  .cd-text {
+    font-size: 8;
+    color: #00ffff;
+    font-weight: bold;
+  }
+</style>
+<div class="cd-panel">
+  <span id="countdown-text" class="cd-text">3</span>
+</div>

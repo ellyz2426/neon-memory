@@ -1,0 +1,93 @@
+<style>
+  .set-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3;
+    background-color: rgba(0, 0, 0, 0.9);
+    border-color: #aa44ff;
+    border-width: 0.15;
+    border-radius: 1.5;
+    gap: 1.5;
+  }
+  .set-title {
+    font-size: 3;
+    color: #aa44ff;
+    font-weight: bold;
+  }
+  .set-row {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .set-label { font-size: 1.5; color: #aaaaaa; }
+  .set-value { font-size: 1.5; color: #00ffff; font-weight: bold; }
+  .set-btn {
+    font-size: 1.5;
+    color: #ffffff;
+    background-color: rgba(170, 68, 255, 0.2);
+    padding: 0.4;
+    padding-left: 1;
+    padding-right: 1;
+    border-color: #aa44ff;
+    border-width: 0.06;
+    border-radius: 0.3;
+    cursor: pointer;
+  }
+  .set-ctrl {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5;
+    align-items: center;
+  }
+  .back-btn {
+    font-size: 1.6;
+    color: #888888;
+    background-color: rgba(128, 128, 128, 0.1);
+    padding: 0.6;
+    padding-left: 2;
+    padding-right: 2;
+    border-color: #555555;
+    border-width: 0.06;
+    border-radius: 0.4;
+    cursor: pointer;
+  }
+</style>
+<div class="set-panel">
+  <span class="set-title">SETTINGS</span>
+  <div class="set-row">
+    <span class="set-label">Master Volume</span>
+    <div class="set-ctrl">
+      <div id="btn-master-down" class="set-btn" cursor="pointer">-</div>
+      <span id="set-master" class="set-value">70%</span>
+      <div id="btn-master-up" class="set-btn" cursor="pointer">+</div>
+    </div>
+  </div>
+  <div class="set-row">
+    <span class="set-label">SFX Volume</span>
+    <div class="set-ctrl">
+      <div id="btn-sfx-down" class="set-btn" cursor="pointer">-</div>
+      <span id="set-sfx" class="set-value">80%</span>
+      <div id="btn-sfx-up" class="set-btn" cursor="pointer">+</div>
+    </div>
+  </div>
+  <div class="set-row">
+    <span class="set-label">Music Volume</span>
+    <div class="set-ctrl">
+      <div id="btn-music-down" class="set-btn" cursor="pointer">-</div>
+      <span id="set-music" class="set-value">50%</span>
+      <div id="btn-music-up" class="set-btn" cursor="pointer">+</div>
+    </div>
+  </div>
+  <div class="set-row">
+    <span class="set-label">Arena Theme</span>
+    <div class="set-ctrl">
+      <div id="btn-theme-prev" class="set-btn" cursor="pointer">&lt;</div>
+      <span id="set-theme" class="set-value">Neon Holodeck</span>
+      <div id="btn-theme-next" class="set-btn" cursor="pointer">&gt;</div>
+    </div>
+  </div>
+  <div id="btn-set-back" class="back-btn" cursor="pointer">BACK</div>
+</div>

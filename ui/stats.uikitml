@@ -1,0 +1,57 @@
+<style>
+  .stats-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3;
+    background-color: rgba(0, 0, 0, 0.9);
+    border-color: #00ff44;
+    border-width: 0.15;
+    border-radius: 1.5;
+    gap: 0.8;
+  }
+  .stats-title {
+    font-size: 3;
+    color: #00ff44;
+    font-weight: bold;
+  }
+  .stat-row {
+    display: flex;
+    flex-direction: row;
+    width: 85%;
+    justify-content: space-between;
+    padding-top: 0.3;
+    padding-bottom: 0.3;
+    border-color: rgba(0, 255, 68, 0.1);
+    border-width: 0;
+    border-bottom-width: 0.03;
+  }
+  .stat-label { font-size: 1.4; color: #aaaaaa; }
+  .stat-value { font-size: 1.4; color: #00ffff; font-weight: bold; }
+  .back-btn {
+    font-size: 1.6;
+    color: #888888;
+    background-color: rgba(128, 128, 128, 0.1);
+    padding: 0.6;
+    padding-left: 2;
+    padding-right: 2;
+    border-color: #555555;
+    border-width: 0.06;
+    border-radius: 0.4;
+    cursor: pointer;
+  }
+</style>
+<div class="stats-panel">
+  <span class="stats-title">STATISTICS</span>
+  <div class="stat-row"><span class="stat-label">Games Played</span><span id="stat-games" class="stat-value">0</span></div>
+  <div class="stat-row"><span class="stat-label">Best Score</span><span id="stat-best-score" class="stat-value">0</span></div>
+  <div class="stat-row"><span class="stat-label">Best Level</span><span id="stat-best-level" class="stat-value">0</span></div>
+  <div class="stat-row"><span class="stat-label">Total Correct</span><span id="stat-correct" class="stat-value">0</span></div>
+  <div class="stat-row"><span class="stat-label">Accuracy</span><span id="stat-accuracy" class="stat-value">0%</span></div>
+  <div class="stat-row"><span class="stat-label">Best Streak</span><span id="stat-streak" class="stat-value">0</span></div>
+  <div class="stat-row"><span class="stat-label">Perfect Games</span><span id="stat-perfect" class="stat-value">0</span></div>
+  <div class="stat-row"><span class="stat-label">Total Panel Hits</span><span id="stat-panels" class="stat-value">0</span></div>
+  <div class="stat-row"><span class="stat-label">Modes Played</span><span id="stat-modes" class="stat-value">0/8</span></div>
+  <div class="stat-row"><span class="stat-label">Play Time</span><span id="stat-time" class="stat-value">0m</span></div>
+  <div id="btn-stats-back" class="back-btn" cursor="pointer">BACK</div>
+</div>

@@ -1,0 +1,55 @@
+<style>
+  .hud-panel {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5;
+    background-color: rgba(0, 0, 0, 0.75);
+    border-color: #00ffff;
+    border-width: 0.08;
+    border-radius: 0.8;
+    gap: 0.3;
+  }
+  .hud-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 2;
+  }
+  .hud-label {
+    font-size: 1.2;
+    color: #888888;
+  }
+  .hud-value {
+    font-size: 2;
+    color: #00ffff;
+    font-weight: bold;
+  }
+  .hud-combo {
+    font-size: 1.8;
+    color: #ff00ff;
+    font-weight: bold;
+  }
+  .hud-mode {
+    font-size: 1;
+    color: #666666;
+  }
+  .hud-time {
+    font-size: 1.8;
+    color: #ffaa00;
+    font-weight: bold;
+  }
+</style>
+<div class="hud-panel">
+  <div class="hud-row">
+    <span id="hud-score" class="hud-value">0</span>
+    <span id="hud-level" class="hud-value">LV 1</span>
+  </div>
+  <div class="hud-row">
+    <span id="hud-lives" class="hud-label">***</span>
+    <span id="hud-combo" class="hud-combo"></span>
+  </div>
+  <div class="hud-row">
+    <span id="hud-mode" class="hud-mode">CLASSIC</span>
+    <span id="hud-time" class="hud-time"></span>
+  </div>
+</div>

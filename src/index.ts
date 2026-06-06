@@ -1114,6 +1114,16 @@ function getAchievements(gs: GameStateManager): Achievement[] {
     { id: 'level_42', name: 'Answer', description: 'Reach level 42', check: () => gs.bestLevel >= 42, hidden: true },
     { id: 'full_ring', name: 'Full Circle', description: 'Level 12 on Dodecagon', check: () => gs.layoutsPlayed.has('Dodecagon') && gs.bestLevel >= 12, hidden: true },
 
+    // Additional mastery
+    { id: 'penta_15', name: 'Pentagon Pro', description: 'Level 15 on Pentagon', check: () => gs.layoutsPlayed.has('Pentagon') && gs.bestLevel >= 15 },
+    { id: 'hex_20', name: 'Hex Champion', description: 'Level 20 on Hexagon', check: () => gs.layoutsPlayed.has('Hexagon') && gs.bestLevel >= 20 },
+    { id: 'classic_20', name: 'Classic Master', description: 'Level 20 in Classic', check: () => gs.modesPlayed.has('Classic') && gs.bestLevel >= 20 },
+    { id: 'speed_15', name: 'Lightning Fast', description: 'Level 15 in Speed', check: () => gs.modesPlayed.has('Speed') && gs.bestLevel >= 15 },
+    { id: 'perfect_10', name: 'Perfect Ten', description: '10 perfect games', check: () => gs.perfectGames >= 10 },
+    { id: 'perfect_25', name: 'Flawless Record', description: '25 perfect games', check: () => gs.perfectGames >= 25 },
+    { id: 'total_20k', name: 'Panel Immortal', description: 'Hit 20,000 panels', check: () => gs.totalPanelHits >= 20000 },
+    { id: 'combo_40', name: 'Combo Deity', description: 'Get a x40 combo', check: () => gs.maxCombo >= 40 },
+
     // Welcome
     { id: 'welcome', name: 'Welcome', description: 'Start your first game', check: () => gs.games >= 1 },
   ];

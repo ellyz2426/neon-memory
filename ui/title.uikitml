@@ -91,6 +91,26 @@
   .btn-challenge { border-color: #ff4488; background-color: rgba(255, 68, 136, 0.15); }
   .btn-set { border-color: #aa44ff; background-color: rgba(170, 68, 255, 0.15); }
   .btn-help-style { border-color: #4488ff; background-color: rgba(68, 136, 255, 0.15); }
+  .btn-quick { border-color: #00ff88; background-color: rgba(0, 255, 136, 0.2); }
+  .quick-info {
+    font-size: 0.9;
+    color: rgba(0, 255, 136, 0.7);
+    margin-top: -0.3;
+  }
+  .last-game-bar {
+    display: flex;
+    flex-direction: row;
+    width: 85%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.4;
+    background-color: rgba(255, 170, 0, 0.06);
+    border-color: rgba(255, 170, 0, 0.2);
+    border-width: 0.05;
+    border-radius: 0.6;
+  }
+  .last-game-label { font-size: 1.0; color: #888888; }
+  .last-game-val { font-size: 1.2; color: #ffaa00; font-weight: bold; }
 </style>
 <div class="title-panel">
   <span class="game-title">NEON MEMORY</span>
@@ -107,6 +127,8 @@
   </div>
   <div class="btn-row">
     <div id="btn-play" class="menu-btn" cursor="pointer">PLAY</div>
+    <div id="btn-quick" class="menu-btn btn-quick" cursor="pointer">QUICK PLAY</div>
+    <span id="quick-info" class="quick-info">Classic / Hexagon / Medium</span>
     <div id="btn-challenge" class="menu-btn btn-challenge" cursor="pointer">CHALLENGE</div>
     <div id="btn-scores" class="menu-btn btn-scores" cursor="pointer">SCORES</div>
     <div id="btn-achievements" class="menu-btn btn-ach" cursor="pointer">ACHIEVEMENTS</div>
@@ -114,5 +136,9 @@
     <div id="btn-skins" class="menu-btn btn-skins" cursor="pointer">PANEL SKINS</div>
     <div id="btn-settings" class="menu-btn btn-set" cursor="pointer">SETTINGS</div>
     <div id="btn-help" class="menu-btn btn-help-style" cursor="pointer">HELP</div>
+  </div>
+  <div id="last-game-bar" class="last-game-bar">
+    <span id="last-game-label" class="last-game-label">Last game:</span>
+    <span id="last-game-result" class="last-game-val">---</span>
   </div>
 </div>

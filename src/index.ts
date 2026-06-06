@@ -355,6 +355,20 @@ class GameStateManager {
   shakeIntensity = 0;
   shakeDecay = 0;
 
+  // Quick play (last used settings)
+  lastModeIndex = 0;
+  lastLayoutIndex = 2;
+  lastDifficulty = 1;
+  hasPlayedBefore = false;
+
+  // Urgency tick
+  urgencyTickTimer = 0;
+
+  // Quick play memory
+  lastQuickMode = 0;
+  lastQuickLayout = 2;
+  lastQuickDifficulty = 1;
+
   constructor() {
     this.load();
   }
@@ -395,6 +409,9 @@ class GameStateManager {
         totalGamesWon: this.totalGamesWon,
         recentGames: this.recentGames.slice(0, 10),
         showMarkers: this.showMarkers,
+        lastQuickMode: this.lastQuickMode,
+        lastQuickLayout: this.lastQuickLayout,
+        lastQuickDifficulty: this.lastQuickDifficulty,
       }));
     } catch {}
   }
@@ -437,6 +454,9 @@ class GameStateManager {
       this.totalGamesWon = d.totalGamesWon || 0;
       this.recentGames = d.recentGames || [];
       this.showMarkers = d.showMarkers ?? true;
+      this.lastQuickMode = d.lastQuickMode || 0;
+      this.lastQuickLayout = d.lastQuickLayout || 2;
+      this.lastQuickDifficulty = d.lastQuickDifficulty || 1;
     } catch {}
   }
 
@@ -962,6 +982,21 @@ class AudioManager {
       osc.start(t + delay);
       osc.stop(t + delay + 0.3);
     }
+  }
+
+  playUrgencyTick() {
+    if (!this.ctx || !this.sfxGain) return;
+    const t = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    osc.type = 'square';
+    osc.frequency.value = 1200;
+    const g = this.ctx.createGain();
+    g.gain.setValueAtTime(0.08, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 0.05);
+    osc.connect(g);
+    g.connect(this.sfxGain);
+    osc.start(t);
+    osc.stop(t + 0.05);
   }
 
   updateVolumes(gs: GameStateManager) {
@@ -1761,6 +1796,11 @@ async function main() {
     gs.skinsUsed.add(PANEL_SKINS[gs.selectedSkin].name);
     gs.themesUsed.add(ARENA_THEMES[gs.selectedTheme].name);
 
+    // Save for Quick Play
+    gs.lastQuickMode = GAME_MODES.indexOf(gs.currentMode);
+    gs.lastQuickLayout = LAYOUTS.indexOf(gs.currentLayout);
+    gs.lastQuickDifficulty = gs.difficulty;
+
     if (gs.isChallenge) {
       gs.challengesPlayed++;
     }
@@ -1961,6 +2001,10 @@ async function main() {
       if (gs.combo > gs.maxCombo) gs.maxCombo = gs.combo;
       if (gs.streak > gs.bestStreak) gs.bestStreak = gs.streak;
       gs.inputTimer = 0;
+
+      // Update sequence progress indicator
+      const seqDoc = getDoc(seqEntity);
+      setText(seqDoc, 'seq-text', `${gs.playerIndex}/${gs.sequence.length}`);
 
       if (gs.combo > 0 && gs.combo % 5 === 0) {
         audio.playCombo(Math.min(gs.combo / 5, 5));
@@ -2209,6 +2253,22 @@ async function main() {
     setText(doc, 'stat-challenges', `${gs.challengesPlayed}`);
     setText(doc, 'stat-powerups', `${gs.powerUpsUsed}`);
     setText(doc, 'stat-time', `${Math.floor(gs.totalPlayTime / 3600)}h ${Math.floor((gs.totalPlayTime % 3600) / 60)}m`);
+    // Win rate & average score
+    const winRate = gs.games > 0 ? Math.round((gs.totalGamesWon / gs.games) * 100) : 0;
+    setText(doc, 'stat-winrate', `${winRate}% (${gs.totalGamesWon}/${gs.games})`);
+    const avgScore = gs.recentGames.length > 0
+      ? Math.round(gs.recentGames.reduce((a, g) => a + g.score, 0) / gs.recentGames.length)
+      : 0;
+    setText(doc, 'stat-avg-score', `${avgScore}`);
+    // Recent game history
+    for (let i = 0; i < 5; i++) {
+      const g = gs.recentGames[i];
+      if (g) {
+        setText(doc, `hist-${i}`, `${g.grade} Lv${g.level} ${g.score}pts ${g.mode} (${g.date})`);
+      } else {
+        setText(doc, `hist-${i}`, '---');
+      }
+    }
   }
 
   function updateSettings() {
@@ -2268,6 +2328,20 @@ async function main() {
     setText(doc, 'profile-badge', xp.badge);
     setText(doc, 'profile-streak', gs.dailyStreak > 0 ? `${gs.dailyStreak} day streak` : 'No streak');
     setText(doc, 'profile-ach', `${gs.achievements.size} achievements`);
+
+    // Quick play info
+    const qMode = GAME_MODES[gs.lastQuickMode]?.name || 'Classic';
+    const qLayout = LAYOUTS[gs.lastQuickLayout]?.name || 'Hexagon';
+    const qDiff = ['Easy', 'Medium', 'Hard'][gs.lastQuickDifficulty] || 'Medium';
+    setText(doc, 'quick-info', `${qMode} / ${qLayout} / ${qDiff}`);
+
+    // Last game result
+    if (gs.recentGames.length > 0) {
+      const last = gs.recentGames[0];
+      setText(doc, 'last-game-result', `${last.grade} - Lv${last.level} / ${last.score}pts`);
+    } else {
+      setText(doc, 'last-game-result', 'No games yet');
+    }
   }
 
   // ─── Button Wiring ──────────────────────────
@@ -2298,6 +2372,16 @@ async function main() {
           return;
         }
         showPanel('modeselect');
+      });
+      tryWire(titleEntity, 'btn-quick', () => {
+        if (!gs.tutorialSeen) {
+          showPanel('tutorial');
+          return;
+        }
+        gs.currentMode = GAME_MODES[gs.lastQuickMode] || GAME_MODES[0];
+        gs.currentLayout = LAYOUTS[gs.lastQuickLayout] || LAYOUTS[2];
+        gs.difficulty = gs.lastQuickDifficulty;
+        startCountdown();
       });
       tryWire(titleEntity, 'btn-challenge', () => { updateChallenge(); showPanel('challenge'); });
       tryWire(titleEntity, 'btn-scores', () => { updateLeaderboard(); showPanel('leaderboard'); });
@@ -2735,6 +2819,10 @@ async function main() {
           const panelIdx = gs.sequence[gs.sequenceShowIndex];
           const speed = gs.getSpeedForLevel();
           flashPanel(panelIdx, speed / 1000);
+          // Highlight the newest panel in the sequence
+          if (gs.sequenceShowIndex === gs.sequence.length - 1 && gs.level > 1) {
+            particles.ring(panels[panelIdx].mesh.position.clone(), '#ffaa00', 12);
+          }
           gs.sequenceShowIndex++;
           gs.sequenceTimer = (speed + gs.getGapForLevel()) / 1000;
         } else {
@@ -2744,7 +2832,7 @@ async function main() {
           gs.inputTimer = 0;
           showPanel('input');
           const doc = getDoc(seqEntity);
-          setText(doc, 'seq-text', 'YOUR TURN!');
+          setText(doc, 'seq-text', `0/${gs.sequence.length}`);
         }
       }
     }
@@ -2757,6 +2845,20 @@ async function main() {
     // Input timeout
     if (gs.state === 'input') {
       gs.inputTimer += dt;
+
+      // Urgency tick sounds when timer is low
+      const timeoutSecs = gs.getInputTimeout();
+      const remaining = timeoutSecs - gs.inputTimer;
+      if (remaining <= 3 && remaining > 0) {
+        gs.urgencyTickTimer -= dt;
+        if (gs.urgencyTickTimer <= 0) {
+          audio.playUrgencyTick();
+          gs.urgencyTickTimer = remaining <= 1.5 ? 0.25 : 0.5;
+        }
+      } else {
+        gs.urgencyTickTimer = 0;
+      }
+
       if (gs.inputTimer > gs.getInputTimeout()) {
         gs.lives--;
         gs.combo = 0;

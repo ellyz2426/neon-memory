@@ -73,5 +73,13 @@
   <div class="stat-row"><span class="stat-label">Challenges Played</span><span id="stat-challenges" class="stat-value">0</span></div>
   <div class="stat-row"><span class="stat-label">Power-Ups Used</span><span id="stat-powerups" class="stat-value">0</span></div>
   <div class="stat-row"><span class="stat-label">Play Time</span><span id="stat-time" class="stat-value">0m</span></div>
+  <div class="stat-row"><span class="stat-label">Win Rate</span><span id="stat-winrate" class="stat-value">0%</span></div>
+  <div class="stat-row"><span class="stat-label">Avg Score (Recent)</span><span id="stat-avg-score" class="stat-value">0</span></div>
+  <span class="section-label">RECENT GAMES</span>
+  <div class="stat-row"><span id="hist-0" class="stat-value">---</span></div>
+  <div class="stat-row"><span id="hist-1" class="stat-value">---</span></div>
+  <div class="stat-row"><span id="hist-2" class="stat-value">---</span></div>
+  <div class="stat-row"><span id="hist-3" class="stat-value">---</span></div>
+  <div class="stat-row"><span id="hist-4" class="stat-value">---</span></div>
   <div id="btn-stats-back" class="back-btn" cursor="pointer">BACK</div>
 </div>

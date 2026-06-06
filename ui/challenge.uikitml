@@ -1,0 +1,127 @@
+<style>
+  .ch-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2.5;
+    background-color: rgba(0, 0, 0, 0.9);
+    border-color: #ff4488;
+    border-width: 0.15;
+    border-radius: 1.5;
+    gap: 1;
+  }
+  .ch-title {
+    font-size: 3;
+    color: #ff4488;
+    font-weight: bold;
+  }
+  .ch-subtitle {
+    font-size: 1.4;
+    color: #aaaaaa;
+  }
+  .ch-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6;
+    width: 100%;
+  }
+  .ch-label {
+    font-size: 1.3;
+    color: #888888;
+  }
+  .ch-value {
+    font-size: 2;
+    color: #ff4488;
+    font-weight: bold;
+  }
+  .ch-code {
+    font-size: 4;
+    color: #00ffff;
+    font-weight: bold;
+    letter-spacing: 0.3;
+  }
+  .ch-row {
+    display: flex;
+    flex-direction: row;
+    gap: 1;
+    width: 100%;
+    justify-content: center;
+  }
+  .ch-opt-btn {
+    font-size: 1.4;
+    color: #ffffff;
+    background-color: rgba(255, 68, 136, 0.15);
+    padding: 0.8;
+    padding-left: 1.5;
+    padding-right: 1.5;
+    border-color: #ff4488;
+    border-width: 0.06;
+    border-radius: 0.4;
+    cursor: pointer;
+  }
+  .ch-start-btn {
+    font-size: 2;
+    color: #ffffff;
+    background-color: rgba(0, 255, 255, 0.2);
+    padding: 1;
+    padding-left: 3;
+    padding-right: 3;
+    border-color: #00ffff;
+    border-width: 0.1;
+    border-radius: 0.5;
+    cursor: pointer;
+  }
+  .back-btn {
+    font-size: 1.6;
+    color: #888888;
+    background-color: rgba(128, 128, 128, 0.1);
+    padding: 0.6;
+    padding-left: 2;
+    padding-right: 2;
+    border-color: #555555;
+    border-width: 0.06;
+    border-radius: 0.4;
+    cursor: pointer;
+  }
+  .ch-enter-label {
+    font-size: 1.2;
+    color: #666666;
+  }
+</style>
+<div class="ch-panel">
+  <span class="ch-title">CHALLENGE</span>
+  <span class="ch-subtitle">Create or play a challenge</span>
+  <div class="ch-section">
+    <span class="ch-label">MODE</span>
+    <div class="ch-row">
+      <div id="btn-ch-mode-prev" class="ch-opt-btn" cursor="pointer">&lt;</div>
+      <span id="ch-mode" class="ch-value">Classic</span>
+      <div id="btn-ch-mode-next" class="ch-opt-btn" cursor="pointer">&gt;</div>
+    </div>
+  </div>
+  <div class="ch-section">
+    <span class="ch-label">LAYOUT</span>
+    <div class="ch-row">
+      <div id="btn-ch-layout-prev" class="ch-opt-btn" cursor="pointer">&lt;</div>
+      <span id="ch-layout" class="ch-value">Hexagon</span>
+      <div id="btn-ch-layout-next" class="ch-opt-btn" cursor="pointer">&gt;</div>
+    </div>
+  </div>
+  <div class="ch-section">
+    <span class="ch-label">DIFFICULTY</span>
+    <div class="ch-row">
+      <div id="btn-ch-diff-prev" class="ch-opt-btn" cursor="pointer">&lt;</div>
+      <span id="ch-diff" class="ch-value">Medium</span>
+      <div id="btn-ch-diff-next" class="ch-opt-btn" cursor="pointer">&gt;</div>
+    </div>
+  </div>
+  <div class="ch-section">
+    <span class="ch-label">CHALLENGE CODE</span>
+    <span id="ch-code" class="ch-code">------</span>
+  </div>
+  <div id="btn-ch-generate" class="ch-start-btn" cursor="pointer">GENERATE CODE</div>
+  <div id="btn-ch-play" class="ch-start-btn" cursor="pointer">PLAY CHALLENGE</div>
+  <span class="ch-enter-label">Press C to enter a code</span>
+  <div id="btn-ch-back" class="back-btn" cursor="pointer">BACK</div>
+</div>

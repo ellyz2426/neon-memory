@@ -1,0 +1,311 @@
+{
+  "element": {
+    "type": "container",
+    "sourceTag": "div",
+    "children": [
+      {
+        "type": "container",
+        "sourceTag": "div",
+        "children": [
+          {
+            "sourceTag": "span",
+            "type": "custom",
+            "children": [
+              "-"
+            ],
+            "properties": {
+              "id": "pu-icon-0",
+              "class": "pu-icon"
+            },
+            "dataUid": "uid-3"
+          },
+          {
+            "sourceTag": "span",
+            "type": "custom",
+            "children": [
+              "EMPTY"
+            ],
+            "properties": {
+              "id": "pu-name-0",
+              "class": "pu-name"
+            },
+            "dataUid": "uid-4"
+          },
+          {
+            "sourceTag": "span",
+            "type": "custom",
+            "children": [
+              "[Q]"
+            ],
+            "properties": {
+              "class": "pu-key"
+            },
+            "dataUid": "uid-5"
+          }
+        ],
+        "properties": {
+          "id": "pu-slot-0",
+          "class": "pu-slot",
+          "cursor": "pointer"
+        },
+        "dataUid": "uid-2"
+      },
+      {
+        "type": "container",
+        "sourceTag": "div",
+        "children": [
+          {
+            "sourceTag": "span",
+            "type": "custom",
+            "children": [
+              "-"
+            ],
+            "properties": {
+              "id": "pu-icon-1",
+              "class": "pu-icon"
+            },
+            "dataUid": "uid-7"
+          },
+          {
+            "sourceTag": "span",
+            "type": "custom",
+            "children": [
+              "EMPTY"
+            ],
+            "properties": {
+              "id": "pu-name-1",
+              "class": "pu-name"
+            },
+            "dataUid": "uid-8"
+          },
+          {
+            "sourceTag": "span",
+            "type": "custom",
+            "children": [
+              "[W]"
+            ],
+            "properties": {
+              "class": "pu-key"
+            },
+            "dataUid": "uid-9"
+          }
+        ],
+        "properties": {
+          "id": "pu-slot-1",
+          "class": "pu-slot",
+          "cursor": "pointer"
+        },
+        "dataUid": "uid-6"
+      }
+    ],
+    "properties": {
+      "class": "pu-panel"
+    },
+    "dataUid": "uid-1"
+  },
+  "classes": {
+    "pu-panel": {
+      "content": {
+        "display": "flex",
+        "flexDirection": "row",
+        "padding": "0.8",
+        "backgroundColor": "rgba(0, 0, 0, 0.7)",
+        "borderColor": "#00ff88",
+        "borderWidth": "0.06",
+        "borderRadius": 0.6,
+        "gap": "0.8"
+      }
+    },
+    "pu-slot": {
+      "content": {
+        "display": "flex",
+        "flexDirection": "column",
+        "alignItems": "center",
+        "padding": "0.5",
+        "backgroundColor": "rgba(0, 255, 136, 0.1)",
+        "borderColor": "#00ff88",
+        "borderWidth": "0.04",
+        "borderRadius": 0.4,
+        "gap": "0.2",
+        "cursor": "pointer",
+        "minWidth": "30%"
+      }
+    },
+    "pu-icon": {
+      "content": {
+        "fontSize": "2",
+        "color": "#00ff88"
+      }
+    },
+    "pu-name": {
+      "content": {
+        "fontSize": "0.8",
+        "color": "#aaaaaa"
+      }
+    },
+    "pu-key": {
+      "content": {
+        "fontSize": "0.7",
+        "color": "#666666"
+      }
+    },
+    "pu-empty": {
+      "content": {
+        "backgroundColor": "rgba(80, 80, 80, 0.1)",
+        "borderColor": "#444444"
+      }
+    }
+  },
+  "ranges": {
+    "pu-panel": {
+      "start": {
+        "line": 1,
+        "column": 2
+      },
+      "end": {
+        "line": 1,
+        "column": 11
+      }
+    },
+    "pu-slot": {
+      "start": {
+        "line": 11,
+        "column": 2
+      },
+      "end": {
+        "line": 11,
+        "column": 10
+      }
+    },
+    "pu-icon": {
+      "start": {
+        "line": 24,
+        "column": 2
+      },
+      "end": {
+        "line": 24,
+        "column": 10
+      }
+    },
+    "pu-name": {
+      "start": {
+        "line": 28,
+        "column": 2
+      },
+      "end": {
+        "line": 28,
+        "column": 10
+      }
+    },
+    "pu-key": {
+      "start": {
+        "line": 32,
+        "column": 2
+      },
+      "end": {
+        "line": 32,
+        "column": 9
+      }
+    },
+    "pu-empty": {
+      "start": {
+        "line": 36,
+        "column": 2
+      },
+      "end": {
+        "line": 36,
+        "column": 11
+      }
+    },
+    "uid-1": {
+      "start": {
+        "line": 41,
+        "column": 0
+      },
+      "end": {
+        "line": 52,
+        "column": 6
+      }
+    },
+    "uid-2": {
+      "start": {
+        "line": 42,
+        "column": 2
+      },
+      "end": {
+        "line": 46,
+        "column": 8
+      }
+    },
+    "uid-3": {
+      "start": {
+        "line": 43,
+        "column": 4
+      },
+      "end": {
+        "line": 43,
+        "column": 49
+      }
+    },
+    "uid-4": {
+      "start": {
+        "line": 44,
+        "column": 4
+      },
+      "end": {
+        "line": 44,
+        "column": 53
+      }
+    },
+    "uid-5": {
+      "start": {
+        "line": 45,
+        "column": 4
+      },
+      "end": {
+        "line": 45,
+        "column": 35
+      }
+    },
+    "uid-6": {
+      "start": {
+        "line": 47,
+        "column": 2
+      },
+      "end": {
+        "line": 51,
+        "column": 8
+      }
+    },
+    "uid-7": {
+      "start": {
+        "line": 48,
+        "column": 4
+      },
+      "end": {
+        "line": 48,
+        "column": 49
+      }
+    },
+    "uid-8": {
+      "start": {
+        "line": 49,
+        "column": 4
+      },
+      "end": {
+        "line": 49,
+        "column": 53
+      }
+    },
+    "uid-9": {
+      "start": {
+        "line": 50,
+        "column": 4
+      },
+      "end": {
+        "line": 50,
+        "column": 35
+      }
+    }
+  }
+}

@@ -46,6 +46,19 @@
             "type": "container",
             "sourceTag": "div",
             "children": [
+              "CHALLENGE"
+            ],
+            "properties": {
+              "id": "btn-challenge",
+              "class": "menu-btn btn-challenge",
+              "cursor": "pointer"
+            },
+            "dataUid": "uid-6"
+          },
+          {
+            "type": "container",
+            "sourceTag": "div",
+            "children": [
               "SCORES"
             ],
             "properties": {
@@ -53,7 +66,7 @@
               "class": "menu-btn btn-scores",
               "cursor": "pointer"
             },
-            "dataUid": "uid-6"
+            "dataUid": "uid-7"
           },
           {
             "type": "container",
@@ -66,7 +79,7 @@
               "class": "menu-btn btn-ach",
               "cursor": "pointer"
             },
-            "dataUid": "uid-7"
+            "dataUid": "uid-8"
           },
           {
             "type": "container",
@@ -79,7 +92,7 @@
               "class": "menu-btn btn-stats",
               "cursor": "pointer"
             },
-            "dataUid": "uid-8"
+            "dataUid": "uid-9"
           },
           {
             "type": "container",
@@ -92,7 +105,7 @@
               "class": "menu-btn btn-skins",
               "cursor": "pointer"
             },
-            "dataUid": "uid-9"
+            "dataUid": "uid-10"
           },
           {
             "type": "container",
@@ -105,7 +118,7 @@
               "class": "menu-btn btn-set",
               "cursor": "pointer"
             },
-            "dataUid": "uid-10"
+            "dataUid": "uid-11"
           },
           {
             "type": "container",
@@ -118,7 +131,7 @@
               "class": "menu-btn btn-help-style",
               "cursor": "pointer"
             },
-            "dataUid": "uid-11"
+            "dataUid": "uid-12"
           }
         ],
         "properties": {
@@ -145,7 +158,7 @@
         "borderColor": "#00ffff",
         "borderWidth": "0.15",
         "borderRadius": 1.5,
-        "gap": "1.5"
+        "gap": "1.2"
       }
     },
     "game-title": {
@@ -165,17 +178,17 @@
       "content": {
         "display": "flex",
         "flexDirection": "column",
-        "gap": "1",
+        "gap": "0.8",
         "width": "100%",
         "alignItems": "center"
       }
     },
     "menu-btn": {
       "content": {
-        "fontSize": "2",
+        "fontSize": "1.8",
         "color": "#ffffff",
         "backgroundColor": "rgba(0, 255, 255, 0.15)",
-        "padding": "1",
+        "padding": "0.8",
         "paddingLeft": "3",
         "paddingRight": "3",
         "borderColor": "#00ffff",
@@ -206,6 +219,12 @@
       }
     },
     "btn-skins": {
+      "content": {
+        "borderColor": "#ff4488",
+        "backgroundColor": "rgba(255, 68, 136, 0.15)"
+      }
+    },
+    "btn-challenge": {
       "content": {
         "borderColor": "#ff4488",
         "backgroundColor": "rgba(255, 68, 136, 0.15)"
@@ -315,87 +334,87 @@
         "column": 12
       }
     },
-    "btn-set": {
+    "btn-challenge": {
       "start": {
         "line": 49,
         "column": 2
       },
       "end": {
         "line": 49,
+        "column": 16
+      }
+    },
+    "btn-set": {
+      "start": {
+        "line": 50,
+        "column": 2
+      },
+      "end": {
+        "line": 50,
         "column": 10
       }
     },
     "btn-help-style": {
       "start": {
-        "line": 50,
+        "line": 51,
         "column": 2
       },
       "end": {
-        "line": 50,
+        "line": 51,
         "column": 17
       }
     },
     "uid-1": {
       "start": {
-        "line": 52,
+        "line": 53,
         "column": 0
       },
       "end": {
-        "line": 64,
+        "line": 66,
         "column": 6
       }
     },
     "uid-2": {
       "start": {
-        "line": 53,
+        "line": 54,
         "column": 2
       },
       "end": {
-        "line": 53,
+        "line": 54,
         "column": 45
       }
     },
     "uid-3": {
       "start": {
-        "line": 54,
+        "line": 55,
         "column": 2
       },
       "end": {
-        "line": 54,
+        "line": 55,
         "column": 50
       }
     },
     "uid-4": {
       "start": {
-        "line": 55,
+        "line": 56,
         "column": 2
       },
       "end": {
-        "line": 63,
+        "line": 65,
         "column": 8
       }
     },
     "uid-5": {
       "start": {
-        "line": 56,
+        "line": 57,
         "column": 4
       },
       "end": {
-        "line": 56,
+        "line": 57,
         "column": 67
       }
     },
     "uid-6": {
-      "start": {
-        "line": 57,
-        "column": 4
-      },
-      "end": {
-        "line": 57,
-        "column": 82
-      }
-    },
-    "uid-7": {
       "start": {
         "line": 58,
         "column": 4
@@ -405,43 +424,63 @@
         "column": 91
       }
     },
-    "uid-8": {
+    "uid-7": {
       "start": {
         "line": 59,
         "column": 4
       },
       "end": {
         "line": 59,
-        "column": 79
+        "column": 82
+      }
+    },
+    "uid-8": {
+      "start": {
+        "line": 60,
+        "column": 4
+      },
+      "end": {
+        "line": 60,
+        "column": 91
       }
     },
     "uid-9": {
       "start": {
-        "line": 60,
+        "line": 61,
         "column": 4
       },
       "end": {
-        "line": 60,
-        "column": 85
+        "line": 61,
+        "column": 79
       }
     },
     "uid-10": {
       "start": {
-        "line": 61,
+        "line": 62,
         "column": 4
       },
       "end": {
-        "line": 61,
-        "column": 83
+        "line": 62,
+        "column": 85
       }
     },
     "uid-11": {
       "start": {
-        "line": 62,
+        "line": 63,
         "column": 4
       },
       "end": {
-        "line": 62,
+        "line": 63,
+        "column": 83
+      }
+    },
+    "uid-12": {
+      "start": {
+        "line": 64,
+        "column": 4
+      },
+      "end": {
+        "line": 64,
         "column": 82
       }
     }

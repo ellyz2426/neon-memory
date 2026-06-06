@@ -100,5 +100,6 @@
   </div>
   <span id="go-mode" class="go-mode">Classic / Hexagon</span>
   <div id="btn-rematch" class="go-btn" cursor="pointer">REMATCH</div>
+  <div id="btn-replay-last" class="go-btn title-btn" cursor="pointer">REPLAY SEQUENCE</div>
   <div id="btn-go-title" class="go-btn title-btn" cursor="pointer">TITLE</div>
 </div>

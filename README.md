@@ -1,56 +1,74 @@
 # Neon Memory VR
 
-A holodeck-style 3D Simon Says memory game built with IWSDK 0.4.1.
+A neon-themed 3D Simon Says memory game built with [IWSDK](https://iwsdk.dev) (Immersive Web SDK). Play in VR on Meta Quest or in your browser — same game, same features, full spatial UI.
 
-## Gameplay
-
-A ring of neon panels surrounds you. Watch them light up in sequence, then repeat the pattern by clicking/pointing at the panels. Each round adds one more step to the sequence. How far can you go?
+**[Play Now →](https://ellyz2426.github.io/neon-memory/)**
 
 ## Features
 
-- **6 Panel Layouts:** Quad (4), Pentagon (5), Hexagon (6), Octagon (8), Decagon (10), Dodecagon (12)
-- **8 Game Modes:** Classic, Speed, Reverse, Rush (60s), Zen, Daily Challenge, Survival, Marathon
-- **3 Difficulty Levels:** Easy, Medium, Hard — affecting playback speed and input timeout
-- **8 Panel Skins:** Neon Classic, Solar Flare, Frost Core, Toxic Pulse, Void Purple, Chrome, Rainbow, Midnight
-- **5 Arena Themes:** Neon Holodeck, Crimson Arcade, Toxic Neon, Ultra Violet, Solar Blaze
-- **40 Achievements** with localStorage persistence
-- **Top 20 Leaderboard** per-game history
-- **Career Statistics:** games, scores, accuracy, streaks, play time
-- **Combo System:** consecutive correct hits build multiplier
-- **Procedural Audio:** distinct musical tone per panel, 15+ SFX, ambient synthwave drone
-- **Particle Effects:** burst on panel hit, ring on combo, celebration effects
-- **Dual Runtime:** VR (XR controller laser pointer + trigger) and browser (mouse click + number keys)
-- **16 PanelUI Templates** — zero HTML DOM overlays
+### Core Gameplay
+- **6 panel layouts** — Quad (4) through Dodecagon (12) panels arranged in a 3D ring
+- **8 game modes** — Classic, Speed, Reverse, Rush, Zen, Daily Challenge, Survival, Marathon
+- **3 difficulty levels** — Easy, Medium, Hard with different speeds and timeouts
+- **Combo scoring system** — Build streaks for multiplied points
+- **Challenge mode** — Generate shareable 6-character codes for competitive play
+
+### Progression
+- **XP/Level system** — 50 levels from Newbie to NEON GOD
+- **89+ achievements** — Including hidden achievements and milestone rewards
+- **12 panel skins** — Level-gated unlocks with unique color palettes
+- **8 arena themes** — Each with unique ambient audio and visual identity
+- **Daily streak tracking** — Consecutive day bonuses with XP rewards
+- **Top 20 leaderboard** — Track your best scores across all modes
+- **Performance rating** — S through F grades based on accuracy, level, and combo
+
+### Power-Ups
+- **Replay** — See the sequence one more time
+- **Slow-Mo** — Half speed for 2 rounds
+- **Shield** — Block one mistake
+- **Hint** — Flash the next expected panel
+
+### Accessibility
+- **Unique geometric markers** on each panel (sphere, cube, cone, ring, etc.) for colorblind support
+- **Keyboard shortcuts** (1-9 for panels, Q/W for power-ups)
+
+### Technical
+- **Dual runtime** — Full VR with XR controllers + browser with mouse/keyboard
+- **20 PanelUI spatial UI templates** — Zero HTML DOM, all game UI works in XR
+- **Theme-specific procedural audio** — Unique drone frequencies and arpeggiator scales per arena
+- **Procedural sound system** — 12 harmonic tones, 15+ sound effects, ambient drone
+- **Particle effects** — Hit bursts, combo rings, wave ripples, firework celebrations
+- **Tutorial system** — Guided onboarding for first-time players
+- **Post-game replay** — Watch the sequence that beat you
 
 ## Controls
 
-### Browser
-- **Click** panels to select
-- **1-9 keys** for quick panel select
-- **ESC** to pause
-- **R** to rematch (game over screen)
-
-### VR
-- **Right trigger** to select pointed panel
-- **B button** to pause
-- **Laser pointer** for menu interaction
-
-## Tech Stack
-
-- IWSDK 0.4.1 (WebXR framework)
-- TypeScript + Vite
-- PanelUI spatial UI system
-- Web Audio API (procedural)
+| Action | Browser | VR |
+|--------|---------|-----|
+| Select panel | Click / 1-9 keys | Trigger |
+| Pause | ESC | B button |
+| Power-up 1 | Q | A button |
+| Power-up 2 | W | — |
+| Rematch | R | — |
 
 ## Development
 
+Built with IWSDK 0.4.1 on Node.js 20.19+.
+
 ```bash
 npm install
-npm run dev
+npm run dev     # Start dev server
+npm run build   # Production build
 ```
 
-## Build & Deploy
+## Tech Stack
 
-```bash
-npm run build
-```
+- [IWSDK](https://iwsdk.dev) — Immersive Web SDK (WebXR framework)
+- [@pmndrs/uikit](https://github.com/pmndrs/uikit) — Spatial UI via PanelUI
+- [Three.js](https://threejs.org/) — 3D rendering (via @iwsdk/core)
+- Web Audio API — Procedural sound synthesis
+- TypeScript + Vite
+
+## License
+
+MIT

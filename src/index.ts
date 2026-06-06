@@ -303,6 +303,7 @@ class GameStateManager {
   bestDailyStreak = 0;
   tutorialSeen = false;
   totalGamesWon = 0;
+  recentGames: { score: number; level: number; mode: string; grade: string; date: string }[] = [];
 
   // Session state
   state: GameState = 'title';
@@ -386,6 +387,7 @@ class GameStateManager {
         bestDailyStreak: this.bestDailyStreak,
         tutorialSeen: this.tutorialSeen,
         totalGamesWon: this.totalGamesWon,
+        recentGames: this.recentGames.slice(0, 10),
       }));
     } catch {}
   }
@@ -426,6 +428,7 @@ class GameStateManager {
       this.bestDailyStreak = d.bestDailyStreak || 0;
       this.tutorialSeen = d.tutorialSeen || false;
       this.totalGamesWon = d.totalGamesWon || 0;
+      this.recentGames = d.recentGames || [];
     } catch {}
   }
 
@@ -565,31 +568,44 @@ class AudioManager {
     this.musicGain.connect(this.masterGain);
   }
 
-  startDrone() {
+  startDrone(themeIndex = 0) {
     if (!this.ctx || !this.musicGain || this.droneOsc1) return;
+
+    // Theme-specific drone frequencies for unique ambient feel
+    const themeAudio = [
+      { f1: 55, f2: 82.5, shimmer: 330, lfoRate: 0.15, filterCutoff: 400 },   // Neon Holodeck
+      { f1: 65.4, f2: 98.0, shimmer: 392, lfoRate: 0.2, filterCutoff: 450 },  // Crimson Arcade
+      { f1: 49, f2: 73.4, shimmer: 293.66, lfoRate: 0.12, filterCutoff: 350 },// Toxic Neon
+      { f1: 58.3, f2: 87.3, shimmer: 349.23, lfoRate: 0.18, filterCutoff: 380 }, // Ultra Violet
+      { f1: 73.4, f2: 110, shimmer: 440, lfoRate: 0.25, filterCutoff: 500 },  // Solar Blaze
+      { f1: 51.9, f2: 77.8, shimmer: 311.13, lfoRate: 0.1, filterCutoff: 320 }, // Cyberpunk City
+      { f1: 46.2, f2: 69.3, shimmer: 277.18, lfoRate: 0.08, filterCutoff: 280 }, // Frozen Tundra
+      { f1: 61.7, f2: 92.5, shimmer: 369.99, lfoRate: 0.22, filterCutoff: 460 }, // Volcanic Core
+    ];
+    const ta = themeAudio[themeIndex % themeAudio.length];
 
     this.droneOsc1 = this.ctx.createOscillator();
     this.droneOsc1.type = 'sine';
-    this.droneOsc1.frequency.value = 55;
+    this.droneOsc1.frequency.value = ta.f1;
     const lp1 = this.ctx.createBiquadFilter();
     lp1.type = 'lowpass';
-    lp1.frequency.value = 400;
+    lp1.frequency.value = ta.filterCutoff;
     this.droneOsc1.connect(lp1);
     lp1.connect(this.musicGain);
     this.droneOsc1.start();
 
     this.droneOsc2 = this.ctx.createOscillator();
     this.droneOsc2.type = 'triangle';
-    this.droneOsc2.frequency.value = 82.5;
+    this.droneOsc2.frequency.value = ta.f2;
     const lp2 = this.ctx.createBiquadFilter();
     lp2.type = 'lowpass';
-    lp2.frequency.value = 350;
+    lp2.frequency.value = ta.filterCutoff - 50;
     this.droneOsc2.connect(lp2);
     lp2.connect(this.musicGain);
     this.droneOsc2.start();
 
     this.droneLfo = this.ctx.createOscillator();
-    this.droneLfo.frequency.value = 0.15;
+    this.droneLfo.frequency.value = ta.lfoRate;
     const lfoGain = this.ctx.createGain();
     lfoGain.gain.value = 50;
     this.droneLfo.connect(lfoGain);
@@ -598,7 +614,7 @@ class AudioManager {
 
     this.shimmerOsc = this.ctx.createOscillator();
     this.shimmerOsc.type = 'sine';
-    this.shimmerOsc.frequency.value = 330;
+    this.shimmerOsc.frequency.value = ta.shimmer;
     const shimGain = this.ctx.createGain();
     shimGain.gain.value = 0.03;
     this.shimmerOsc.connect(shimGain);
@@ -670,7 +686,7 @@ class AudioManager {
   }
 
   // Arpeggiator that adapts tempo to current level
-  startArpeggiator(bpm: number) {
+  startArpeggiator(bpm: number, themeIndex = 0) {
     if (!this.ctx || !this.musicGain) return;
     this.stopArpeggiator();
 
@@ -678,7 +694,18 @@ class AudioManager {
     this.arpGain.gain.value = 0.04;
     this.arpGain.connect(this.musicGain);
 
-    const notes = [261.63, 329.63, 392.00, 523.25];
+    // Theme-specific arpeggiator scales
+    const themeScales = [
+      [261.63, 329.63, 392.00, 523.25],       // C major pentatonic
+      [293.66, 349.23, 440.00, 587.33],        // D minor-ish
+      [246.94, 329.63, 369.99, 493.88],        // B ambiguous
+      [277.18, 349.23, 415.30, 554.37],        // Db lydian
+      [329.63, 415.30, 493.88, 659.25],        // E bright
+      [261.63, 311.13, 392.00, 466.16],        // C minor
+      [220.00, 277.18, 329.63, 440.00],        // A cold/icy
+      [293.66, 370.00, 440.00, 587.33],        // D fiery
+    ];
+    const notes = themeScales[themeIndex % themeScales.length];
     let noteIdx = 0;
     const interval = (60 / bpm) * 1000 / 2;
 
@@ -706,9 +733,9 @@ class AudioManager {
     }
   }
 
-  updateArpTempo(level: number) {
+  updateArpTempo(level: number, themeIndex = 0) {
     const bpm = Math.min(200, 80 + level * 5);
-    this.startArpeggiator(bpm);
+    this.startArpeggiator(bpm, themeIndex);
   }
 
   playCorrect() {
@@ -1673,7 +1700,7 @@ async function main() {
 
   function startGame() {
     audio.init(gs);
-    audio.startDrone();
+    audio.startDrone(gs.selectedTheme);
 
     gs.sequence = [];
     gs.playerIndex = 0;
@@ -1714,7 +1741,7 @@ async function main() {
     createPanels(gs.currentLayout);
     updatePowerUpHUD();
     updateXPBar();
-    audio.updateArpTempo(1);
+    audio.updateArpTempo(1, gs.selectedTheme);
     nextRound();
   }
 
@@ -1783,7 +1810,7 @@ async function main() {
     }
 
     // Update arpeggiator tempo
-    audio.updateArpTempo(gs.level);
+    audio.updateArpTempo(gs.level, gs.selectedTheme);
 
     gs.isShowingSequence = true;
     gs.sequenceShowIndex = 0;
@@ -1966,6 +1993,17 @@ async function main() {
     if (gs.level > gs.bestLevel) gs.bestLevel = gs.level;
     if (gs.wrongThisRound === 0 && gs.level > 1) gs.perfectGames++;
     if (gs.level >= 5) gs.totalGamesWon++;
+
+    // Record to recent games history
+    const rating = gs.getPerformanceRating();
+    gs.recentGames.unshift({
+      score: gs.score,
+      level: gs.level,
+      mode: gs.isChallenge ? 'Challenge' : gs.currentMode.name,
+      grade: rating.grade,
+      date: new Date().toISOString().slice(0, 10),
+    });
+    gs.recentGames = gs.recentGames.slice(0, 10);
 
     if (gs.currentMode.name === 'Daily') {
       const today = new Date().toISOString().slice(0, 10);
@@ -2232,6 +2270,28 @@ async function main() {
 
       // Game Over
       tryWire(gameoverEntity, 'btn-rematch', () => { startCountdown(); });
+      tryWire(gameoverEntity, 'btn-replay-last', () => {
+        // Replay the last sequence that beat the player
+        if (gs.sequence.length === 0) return;
+        showToast('Replaying last sequence...');
+        panelGroup.visible = true;
+        createPanels(gs.currentLayout);
+        let idx = 0;
+        const seq = gs.currentMode.reverse ? [...gs.sequence].reverse() : gs.sequence;
+        const interval = setInterval(() => {
+          if (idx > 0) resetPanel(seq[idx - 1]);
+          if (idx >= seq.length) {
+            clearInterval(interval);
+            setTimeout(() => {
+              resetAllPanels();
+              panelGroup.visible = false;
+            }, 500);
+            return;
+          }
+          flashPanel(seq[idx], 0.4);
+          idx++;
+        }, 500);
+      });
       tryWire(gameoverEntity, 'btn-go-title', () => { updateTitleProfile(); showPanel('title'); });
 
       // Leaderboard

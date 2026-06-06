@@ -2,12 +2,12 @@
   .help-panel {
     display: flex;
     flex-direction: column;
-    padding: 2;
-    background-color: rgba(0, 0, 0, 0.9);
+    padding: 2.5;
+    background-color: rgba(0, 0, 0, 0.92);
     border-color: #4488ff;
     border-width: 0.15;
     border-radius: 1.5;
-    gap: 1;
+    gap: 0.6;
   }
   .help-title {
     font-size: 3;
@@ -15,13 +15,25 @@
     font-weight: bold;
   }
   .help-section {
-    font-size: 1.6;
+    font-size: 1.5;
     color: #00ffff;
     font-weight: bold;
+    padding-top: 0.3;
   }
   .help-text {
-    font-size: 1.2;
-    color: #aaaaaa;
+    font-size: 1.15;
+    color: #bbbbbb;
+    padding-left: 0.5;
+  }
+  .help-tip {
+    font-size: 1.15;
+    color: #00ff44;
+    padding-left: 0.5;
+  }
+  .help-key {
+    font-size: 1.15;
+    color: #ffaa00;
+    padding-left: 0.5;
   }
   .back-btn {
     font-size: 1.6;
@@ -38,18 +50,43 @@
   }
 </style>
 <div class="help-panel">
-  <span class="help-title">HOW TO PLAY</span>
-  <span class="help-section">Gameplay</span>
-  <span class="help-text">Watch the panels light up in sequence, then repeat the pattern. Each round adds one more step. Miss too many and it is game over!</span>
+  <span class="help-title">GUIDE</span>
+
+  <span class="help-section">Basics</span>
+  <span class="help-text">Watch panels light up, then repeat the pattern. Each round adds one step. Miss too many and it's game over!</span>
+
   <span class="help-section">Browser Controls</span>
-  <span class="help-text">Click panels to select them. Press 1-9 keys for quick panel select. ESC to pause. R to rematch.</span>
+  <span class="help-key">Click — Select panel | 1-9 — Quick select</span>
+  <span class="help-key">Q/W — Use power-ups | ESC — Pause | R — Rematch</span>
+
   <span class="help-section">VR Controls</span>
-  <span class="help-text">Point controller at panels and pull trigger. B button to pause. Laser pointer for menu buttons.</span>
-  <span class="help-section">Modes</span>
-  <span class="help-text">Classic: Growing sequence. Speed: Faster each round. Reverse: Repeat backwards. Rush: 60 second time limit. Zen: No lives. Daily: Same puzzle for everyone. Survival: One mistake. Marathon: Reach level 50.</span>
-  <span class="help-section">Layouts</span>
-  <span class="help-text">Choose 4 to 12 panels. More panels = harder to remember which one lit up!</span>
-  <span class="help-section">Scoring</span>
-  <span class="help-text">Points per correct hit increase with level and combo. Complete rounds for bonus points. Build combos for multipliers!</span>
+  <span class="help-key">Trigger — Select | B — Pause | A — Power-up</span>
+  <span class="help-key">Laser pointer — Menu navigation</span>
+
+  <span class="help-section">8 Game Modes</span>
+  <span class="help-text">Classic: Standard. Speed: Gets faster. Reverse: Repeat backwards. Rush: 60s time limit. Zen: Infinite lives. Daily: Same for everyone. Survival: One mistake. Marathon: Level 50 goal.</span>
+
+  <span class="help-section">Power-Ups</span>
+  <span class="help-text">Replay: See sequence again. Slow-Mo: Half speed for 2 rounds. Shield: Block one mistake. Hint: Flash the next panel.</span>
+  <span class="help-tip">Earned at level milestones (3, 5, 10, 15...).</span>
+
+  <span class="help-section">Scoring Tips</span>
+  <span class="help-tip">Build combos — every 5 correct hits increases your multiplier.</span>
+  <span class="help-tip">Complete rounds quickly for bonus points.</span>
+  <span class="help-tip">Higher difficulty = bigger XP rewards.</span>
+  <span class="help-tip">Daily streaks award bonus XP!</span>
+
+  <span class="help-section">Strategy</span>
+  <span class="help-tip">Start with Quad (4 panels) to learn the rhythm.</span>
+  <span class="help-tip">Use panel shapes and positions, not just colors.</span>
+  <span class="help-tip">Save Shield for deep sequences (level 15+).</span>
+  <span class="help-tip">Zen mode is great for practice.</span>
+
+  <span class="help-section">Challenges</span>
+  <span class="help-text">Generate a 6-character code and share it. Anyone with the code plays the exact same sequence — compete for the best score!</span>
+
+  <span class="help-section">XP and Unlocks</span>
+  <span class="help-text">Earn XP every game. Level up to unlock new panel skins and arena themes. 50 levels from Newbie to NEON GOD.</span>
+
   <div id="btn-help-back" class="back-btn" cursor="pointer">BACK</div>
 </div>

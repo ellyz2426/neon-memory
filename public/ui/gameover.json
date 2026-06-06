@@ -170,6 +170,19 @@
         "type": "container",
         "sourceTag": "div",
         "children": [
+          "REPLAY SEQUENCE"
+        ],
+        "properties": {
+          "id": "btn-replay-last",
+          "class": "go-btn title-btn",
+          "cursor": "pointer"
+        },
+        "dataUid": "uid-16"
+      },
+      {
+        "type": "container",
+        "sourceTag": "div",
+        "children": [
           "TITLE"
         ],
         "properties": {
@@ -177,7 +190,7 @@
           "class": "go-btn title-btn",
           "cursor": "pointer"
         },
-        "dataUid": "uid-16"
+        "dataUid": "uid-17"
       }
     ],
     "properties": {
@@ -445,7 +458,7 @@
         "column": 0
       },
       "end": {
-        "line": 103,
+        "line": 104,
         "column": 6
       }
     },
@@ -596,6 +609,16 @@
       },
       "end": {
         "line": 102,
+        "column": 91
+      }
+    },
+    "uid-17": {
+      "start": {
+        "line": 103,
+        "column": 2
+      },
+      "end": {
+        "line": 103,
         "column": 78
       }
     }

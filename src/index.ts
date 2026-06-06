@@ -304,6 +304,7 @@ class GameStateManager {
   tutorialSeen = false;
   totalGamesWon = 0;
   recentGames: { score: number; level: number; mode: string; grade: string; date: string }[] = [];
+  showMarkers = true;
 
   // Session state
   state: GameState = 'title';
@@ -388,6 +389,7 @@ class GameStateManager {
         tutorialSeen: this.tutorialSeen,
         totalGamesWon: this.totalGamesWon,
         recentGames: this.recentGames.slice(0, 10),
+        showMarkers: this.showMarkers,
       }));
     } catch {}
   }
@@ -429,6 +431,7 @@ class GameStateManager {
       this.tutorialSeen = d.tutorialSeen || false;
       this.totalGamesWon = d.totalGamesWon || 0;
       this.recentGames = d.recentGames || [];
+      this.showMarkers = d.showMarkers ?? true;
     } catch {}
   }
 
@@ -1298,6 +1301,27 @@ async function main() {
     if (centerRingMat) {
       (centerRingMat as MeshBasicMaterial).color.set(theme.glow);
     }
+
+    // Update ambient lights to match theme
+    pointL1.color.set(theme.grid);
+    pointL2.color.set(theme.accent);
+
+    // Update decoration wireframe colors (safe for initial call before decos exist)
+    try {
+      for (const d of decos) {
+        ((d.mesh as LineSegments).material as LineBasicMaterial).color.set(theme.accent);
+      }
+    } catch {}
+
+    // Update ambient particles colors
+    try {
+      for (const ap of ambientParticles) {
+        (ap.mesh.material as MeshBasicMaterial).color.set(theme.glow);
+      }
+    } catch {}
+
+    // Update floor reflection tint
+    try { floorMat.color.set(theme.bg); } catch {}
   }
 
   // Lighting
@@ -1439,16 +1463,18 @@ async function main() {
       mesh.add(edgeMesh);
 
       // Add unique shape marker for accessibility
-      const markerGeo = markerGeos[i % markerGeos.length];
-      const markerMat = new MeshBasicMaterial({
-        color: activeCol.clone(),
-        transparent: true,
-        opacity: 0.6,
-      });
-      const marker = new Mesh(markerGeo, markerMat);
-      marker.position.set(0, -panelHeight * 0.3, 0.05);
-      if (i % markerGeos.length === 8) marker.rotation.z = Math.PI / 4; // rotate the cube
-      mesh.add(marker);
+      if (gs.showMarkers) {
+        const markerGeo = markerGeos[i % markerGeos.length];
+        const markerMat = new MeshBasicMaterial({
+          color: activeCol.clone(),
+          transparent: true,
+          opacity: 0.6,
+        });
+        const marker = new Mesh(markerGeo, markerMat);
+        marker.position.set(0, -panelHeight * 0.3, 0.05);
+        if (i % markerGeos.length === 8) marker.rotation.z = Math.PI / 4;
+        mesh.add(marker);
+      }
 
       panelGroup.add(mesh);
 
@@ -2150,6 +2176,7 @@ async function main() {
     setText(doc, 'set-sfx', `${Math.round(gs.sfxVolume * 100)}%`);
     setText(doc, 'set-music', `${Math.round(gs.musicVolume * 100)}%`);
     setText(doc, 'set-theme', ARENA_THEMES[gs.selectedTheme].name);
+    setText(doc, 'set-markers', gs.showMarkers ? 'ON' : 'OFF');
   }
 
   function updateSkins() {
@@ -2322,6 +2349,46 @@ async function main() {
         gs.save();
       });
       tryWire(settingsEntity, 'btn-set-back', () => { showPanel('title'); });
+      tryWire(settingsEntity, 'btn-markers-toggle', () => {
+        gs.showMarkers = !gs.showMarkers;
+        updateSettings();
+        gs.save();
+        showToast(gs.showMarkers ? 'Panel markers ON' : 'Panel markers OFF');
+      });
+      tryWire(settingsEntity, 'btn-reset-data', () => {
+        try { localStorage.removeItem('neon-memory-save'); } catch {}
+        gs.games = 0;
+        gs.bestScore = 0;
+        gs.bestLevel = 0;
+        gs.totalCorrect = 0;
+        gs.totalWrong = 0;
+        gs.totalPanelHits = 0;
+        gs.bestStreak = 0;
+        gs.perfectGames = 0;
+        gs.modesPlayed = new Set();
+        gs.layoutsPlayed = new Set();
+        gs.skinsUsed = new Set();
+        gs.themesUsed = new Set();
+        gs.dailyBest = 0;
+        gs.dailyDate = '';
+        gs.achievements = new Set();
+        gs.leaderboard = [];
+        gs.selectedSkin = 0;
+        gs.selectedTheme = 0;
+        gs.totalPlayTime = 0;
+        gs.totalXP = 0;
+        gs.powerUpsUsed = 0;
+        gs.challengesPlayed = 0;
+        gs.challengesCreated = 0;
+        gs.dailyStreak = 0;
+        gs.lastPlayDate = '';
+        gs.bestDailyStreak = 0;
+        gs.tutorialSeen = false;
+        gs.totalGamesWon = 0;
+        gs.recentGames = [];
+        showToast('All data reset!');
+        updateTitleProfile();
+      });
 
       // Stats
       tryWire(statsEntity, 'btn-stats-back', () => { showPanel('title'); });

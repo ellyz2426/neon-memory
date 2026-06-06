@@ -8,25 +8,39 @@ A neon-themed 3D Simon Says memory game built with [IWSDK](https://iwsdk.dev) (I
 
 ### Core Gameplay
 - **6 panel layouts** — Quad (4) through Dodecagon (12) panels arranged in a 3D ring
-- **8 game modes** — Classic, Speed, Reverse, Rush, Zen, Daily Challenge, Survival, Marathon
+- **9 game modes** — Classic, Speed, Reverse, Rush, Zen, Daily Challenge, Survival, Marathon, Blind
 - **3 difficulty levels** — Easy, Medium, Hard with different speeds and timeouts
-- **Combo scoring system** — Build streaks for multiplied points
+- **Combo scoring system** — Build streaks for multiplied points, environment intensifies at high combos
 - **Challenge mode** — Generate shareable 6-character codes for competitive play
+- **Quick Play** — Jump back into your last mode/layout/difficulty with one tap
+- **Blind mode** — Panels go dark after watching the sequence — pure positional memory!
 
 ### Progression
 - **XP/Level system** — 50 levels from Newbie to NEON GOD
-- **89+ achievements** — Including hidden achievements and milestone rewards
+- **92+ achievements** — Including hidden achievements, blind mode challenges, and milestone rewards
 - **12 panel skins** — Level-gated unlocks with unique color palettes
 - **8 arena themes** — Each with unique ambient audio and visual identity
 - **Daily streak tracking** — Consecutive day bonuses with XP rewards
 - **Top 20 leaderboard** — Track your best scores across all modes
 - **Performance rating** — S through F grades based on accuracy, level, and combo
+- **Game history** — Track your last 10 games with grade, score, and mode
+- **Win rate tracking** — See your overall win percentage
 
 ### Power-Ups
 - **Replay** — See the sequence one more time
 - **Slow-Mo** — Half speed for 2 rounds
 - **Shield** — Block one mistake
 - **Hint** — Flash the next expected panel
+
+### Visual & Audio Polish
+- **Sequence progress indicator** — See your position in the sequence (3/8) during input
+- **Watching progress** — Track sequence playback progress (WATCH 5/12)
+- **New panel highlight** — Newest panel in sequence gets a golden particle ring
+- **Pedestal state colors** — Blue idle, yellow watching, green→red input timer, red game over
+- **Combo intensity** — Lights brighten and environment reacts to high combos (5+)
+- **Urgency ticks** — Audio ticking when input timer runs low
+- **Combo milestone fireworks** — Special celebrations at x10, x20, x30, x50
+- **Score pops** — See points earned per hit during gameplay
 
 ### Accessibility
 - **Unique geometric markers** on each panel (sphere, cube, cone, ring, etc.) for colorblind support

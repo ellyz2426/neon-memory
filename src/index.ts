@@ -156,6 +156,7 @@ const GAME_MODES: GameMode[] = [
   { name: 'Daily', description: 'Same sequence for everyone today', maxLives: 3, speedMultiplier: 1.0, showTimer: false, reverse: false, timed: false, timeLimit: 0 },
   { name: 'Survival', description: 'One mistake and it is over', maxLives: 1, speedMultiplier: 1.0, showTimer: false, reverse: false, timed: false, timeLimit: 0 },
   { name: 'Marathon', description: 'Reach level 50!', maxLives: 5, speedMultiplier: 1.0, showTimer: false, reverse: false, timed: false, timeLimit: 0 },
+  { name: 'Blind', description: 'Panels go dark after watching!', maxLives: 2, speedMultiplier: 1.2, showTimer: false, reverse: false, timed: false, timeLimit: 0 },
 ];
 
 const LAYOUTS: LayoutConfig[] = [
@@ -1268,6 +1269,11 @@ function getAchievements(gs: GameStateManager): Achievement[] {
     // Win milestones
     { id: 'wins_10', name: 'Frequent Winner', description: 'Win 10 games (reach level 5+)', check: () => gs.totalGamesWon >= 10 },
     { id: 'wins_50', name: 'Serial Winner', description: 'Win 50 games', check: () => gs.totalGamesWon >= 50 },
+
+    // Blind mode
+    { id: 'blind_5', name: 'Blind Faith', description: 'Level 5 in Blind mode', check: () => gs.modesPlayed.has('Blind') && gs.bestLevel >= 5 },
+    { id: 'blind_10', name: 'Blind Master', description: 'Level 10 in Blind mode', check: () => gs.modesPlayed.has('Blind') && gs.bestLevel >= 10 },
+    { id: 'blind_15', name: 'Blind Legend', description: 'Level 15 in Blind mode', check: () => gs.modesPlayed.has('Blind') && gs.bestLevel >= 15 },
   ];
 }
 
@@ -2010,10 +2016,22 @@ async function main() {
         audio.playCombo(Math.min(gs.combo / 5, 5));
         showToast(`x${gs.combo} COMBO!`);
         particles.ring(new Vector3(0, 1.3, 0), panels[panelIndex].activeColor.getStyle());
+
+        // Major combo milestones: fireworks celebration
+        if (gs.combo === 10 || gs.combo === 20 || gs.combo === 30 || gs.combo === 50) {
+          particles.fireworks(new Vector3(0, 2, 0), 15);
+          audio.playFireworks();
+        }
       }
 
       const hitScore = 10 + gs.level * 5 + Math.floor(gs.combo / 2) * 10;
       gs.score += hitScore;
+
+      // Show score pop for significant hits
+      if (gs.combo >= 3 || gs.level >= 5) {
+        const seqDocPop = getDoc(seqEntity);
+        setText(seqDocPop, 'seq-text', `+${hitScore} ${gs.playerIndex}/${gs.sequence.length}`);
+      }
 
       if (gs.playerIndex >= gs.sequence.length) {
         resetAllPanels();
@@ -2725,9 +2743,43 @@ async function main() {
     centerRing.rotation.z += dt * 0.3;
     (centerRingMat as MeshBasicMaterial).opacity = 0.3 + Math.sin(time * 2) * 0.2;
 
-    // Pedestal ring color matches current skin
-    const currentSkinColor = PANEL_SKINS[gs.selectedSkin].colors[0];
-    (centerRingMat as MeshBasicMaterial).color.set(currentSkinColor);
+    // Pedestal color matches game state
+    if (gs.state === 'watching') {
+      (centerRingMat as MeshBasicMaterial).color.set('#ffaa00'); // Yellow: watching
+    } else if (gs.state === 'input') {
+      // Green in input, shifts to red at low timer
+      const timeout = gs.getInputTimeout();
+      const remaining = Math.max(0, 1 - gs.inputTimer / timeout);
+      if (remaining <= 0.25) {
+        (centerRingMat as MeshBasicMaterial).color.set('#ff3333');
+      } else if (remaining <= 0.5) {
+        (centerRingMat as MeshBasicMaterial).color.set('#ffaa00');
+      } else {
+        (centerRingMat as MeshBasicMaterial).color.set('#00ff88');
+      }
+    } else if (gs.state === 'gameover') {
+      (centerRingMat as MeshBasicMaterial).color.set('#ff3344');
+    } else if (gs.state === 'countdown') {
+      (centerRingMat as MeshBasicMaterial).color.set('#ffffff');
+    } else {
+      // Idle: match current skin color
+      const currentSkinColor = PANEL_SKINS[gs.selectedSkin].colors[0];
+      (centerRingMat as MeshBasicMaterial).color.set(currentSkinColor);
+    }
+
+    // Combo intensity: environment reacts to high combos
+    if (gs.state === 'input' && gs.combo >= 5) {
+      const comboIntensity = Math.min(1, (gs.combo - 5) / 25); // 0 at 5, ~1 at 30
+      ambient.intensity = 0.4 + comboIntensity * 0.4;
+      pointL1.intensity = 1.5 + comboIntensity * 2.0;
+      pointL2.intensity = 1.2 + comboIntensity * 1.5;
+      // Faster center ring spin
+      centerRing.rotation.z += dt * comboIntensity * 2.0;
+    } else {
+      ambient.intensity = 0.4;
+      pointL1.intensity = 1.5;
+      pointL2.intensity = 1.2;
+    }
 
     // Panel idle animation and bounce/shake updates
     if (gs.state === 'input' || gs.state === 'watching' || gs.state === 'countdown') {
@@ -2809,6 +2861,10 @@ async function main() {
 
     // Sequence playback
     if (gs.state === 'watching' && gs.isShowingSequence) {
+      // Update watching progress
+      const seqDoc = getDoc(seqEntity);
+      setText(seqDoc, 'seq-text', `WATCH ${gs.sequenceShowIndex}/${gs.sequence.length}`);
+
       gs.sequenceTimer -= dt;
       if (gs.sequenceTimer <= 0) {
         if (gs.sequenceShowIndex > 0) {
@@ -2830,6 +2886,18 @@ async function main() {
           gs.isShowingSequence = false;
           gs.playerIndex = 0;
           gs.inputTimer = 0;
+
+          // Blind mode: dim all panels to identical muted color
+          if (gs.currentMode.name === 'Blind') {
+            for (const panel of panels) {
+              const mat = panel.mesh.material as MeshStandardMaterial;
+              mat.emissive.set('#111122');
+              mat.emissiveIntensity = 0.2;
+              (panel.edgeMesh.material as LineBasicMaterial).color.set('#334466');
+              (panel.edgeMesh.material as LineBasicMaterial).opacity = 0.3;
+            }
+          }
+
           showPanel('input');
           const doc = getDoc(seqEntity);
           setText(doc, 'seq-text', `0/${gs.sequence.length}`);

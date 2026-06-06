@@ -61,6 +61,7 @@
     <div id="btn-mode-5" class="mode-btn" cursor="pointer">Daily Challenge</div>
     <div id="btn-mode-6" class="mode-btn" cursor="pointer">Survival</div>
     <div id="btn-mode-7" class="mode-btn" cursor="pointer">Marathon</div>
+    <div id="btn-mode-8" class="mode-btn" cursor="pointer">Blind</div>
   </div>
   <div id="btn-mode-back" class="back-btn" cursor="pointer">BACK</div>
 </div>

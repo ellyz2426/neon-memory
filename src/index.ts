@@ -53,6 +53,11 @@ interface PanelInfo {
   activeColor: Color;
   frequency: number;
   angle: number;
+  bounceTimer: number;
+  bounceTarget: number;
+  wrongShake: number;
+  baseX: number;
+  baseY: number;
 }
 
 interface GameMode {
@@ -1490,6 +1495,11 @@ async function main() {
         activeColor: activeCol.clone(),
         frequency: freq,
         angle,
+        bounceTimer: 0,
+        bounceTarget: 1.0,
+        wrongShake: 0,
+        baseX: x,
+        baseY: 1.3,
       });
     }
   }
@@ -1861,7 +1871,10 @@ async function main() {
     mat.emissiveIntensity = 1.5;
     (panel.glowMesh.material as MeshBasicMaterial).opacity = 0.6;
     (panel.edgeMesh.material as LineBasicMaterial).opacity = 1.0;
-    panel.mesh.scale.setScalar(1.1);
+
+    // Bounce animation
+    panel.bounceTimer = 0.15;
+    panel.bounceTarget = 1.15;
 
     audio.playTone(panel.frequency, duration * 1.5, 0.35);
 
@@ -1879,7 +1892,7 @@ async function main() {
     mat.emissiveIntensity = 0.3;
     (panel.glowMesh.material as MeshBasicMaterial).opacity = 0;
     (panel.edgeMesh.material as LineBasicMaterial).opacity = 0.4;
-    panel.mesh.scale.setScalar(1.0);
+    panel.bounceTarget = 1.0;
   }
 
   function resetAllPanels() {
@@ -1982,6 +1995,9 @@ async function main() {
       gs.lives--;
       audio.playWrong();
 
+      // Wrong panel shake animation
+      panels[panelIndex].wrongShake = 0.3;
+
       // Camera shake
       gs.shakeIntensity = 0.03;
       gs.shakeDecay = 3.0;
@@ -2081,6 +2097,32 @@ async function main() {
       setText(doc, 'hud-time', `${Math.ceil(gs.timeRemaining)}s`);
     } else {
       setText(doc, 'hud-time', '');
+    }
+
+    // Input timer bar
+    if (gs.state === 'input') {
+      const timeout = gs.getInputTimeout();
+      const remaining = Math.max(0, 1 - gs.inputTimer / timeout);
+      const timerFill = doc.getElementById('hud-timer-fill');
+      if (timerFill) {
+        try {
+          let barColor = '#00ffff';
+          if (remaining <= 0.25) {
+            barColor = '#ff3333';
+          } else if (remaining <= 0.5) {
+            barColor = '#ffaa00';
+          }
+          (timerFill as any).style = { width: `${Math.floor(remaining * 100)}%`, 'background-color': barColor };
+        } catch {}
+      }
+      const secs = Math.ceil((timeout - gs.inputTimer));
+      setText(doc, 'hud-timer-text', secs > 0 ? `${secs}s` : '');
+    } else {
+      setText(doc, 'hud-timer-text', '');
+      const timerFill = doc?.getElementById('hud-timer-fill');
+      if (timerFill) {
+        try { (timerFill as any).style = { width: '100%' }; } catch {}
+      }
     }
   }
 
@@ -2603,11 +2645,39 @@ async function main() {
     const currentSkinColor = PANEL_SKINS[gs.selectedSkin].colors[0];
     (centerRingMat as MeshBasicMaterial).color.set(currentSkinColor);
 
-    // Panel idle animation
+    // Panel idle animation and bounce/shake updates
     if (gs.state === 'input' || gs.state === 'watching' || gs.state === 'countdown') {
       for (const panel of panels) {
         const breathe = 0.2 + Math.sin(time * 1.5 + panel.index * 0.5) * 0.08;
         (panel.edgeMesh.material as LineBasicMaterial).opacity = breathe + 0.2;
+
+        // Bounce animation (spring-like snap)
+        if (panel.bounceTimer > 0) {
+          panel.bounceTimer -= dt;
+          const t = 1 - panel.bounceTimer / 0.15;
+          const scale = 1 + (panel.bounceTarget - 1) * Math.sin(t * Math.PI);
+          panel.mesh.scale.setScalar(scale);
+        } else {
+          // Smoothly return to target scale
+          const current = panel.mesh.scale.x;
+          const target = panel.bounceTarget;
+          if (Math.abs(current - target) > 0.01) {
+            panel.mesh.scale.setScalar(current + (target - current) * 8 * dt);
+          } else {
+            panel.mesh.scale.setScalar(target);
+          }
+        }
+
+        // Wrong-hit shake animation
+        if (panel.wrongShake > 0) {
+          panel.wrongShake -= dt;
+          const shakeAmt = panel.wrongShake * 0.05;
+          panel.mesh.position.x = panel.baseX + (Math.random() - 0.5) * shakeAmt;
+          panel.mesh.position.y = panel.baseY + (Math.random() - 0.5) * shakeAmt;
+        } else {
+          panel.mesh.position.x = panel.baseX;
+          panel.mesh.position.y = panel.baseY;
+        }
       }
     }
 
@@ -2715,8 +2785,9 @@ async function main() {
         if (gs.timeRemaining <= 0) {
           endGame();
         }
-        updateHUD();
       }
+      // Update HUD every frame during input for timer bar animation
+      updateHUD();
     }
 
     // XR controller input

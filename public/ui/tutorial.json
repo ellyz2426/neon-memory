@@ -1,0 +1,915 @@
+{
+  "element": {
+    "type": "container",
+    "sourceTag": "div",
+    "children": [
+      {
+        "sourceTag": "span",
+        "type": "custom",
+        "children": [
+          "HOW TO PLAY"
+        ],
+        "properties": {
+          "class": "tutorial-title"
+        },
+        "dataUid": "uid-2"
+      },
+      {
+        "sourceTag": "span",
+        "type": "custom",
+        "children": [
+          "Welcome to Neon Memory!"
+        ],
+        "properties": {
+          "class": "tutorial-subtitle"
+        },
+        "dataUid": "uid-3"
+      },
+      {
+        "type": "container",
+        "sourceTag": "div",
+        "children": [
+          {
+            "sourceTag": "span",
+            "type": "custom",
+            "children": [
+              "1"
+            ],
+            "properties": {
+              "class": "step-num"
+            },
+            "dataUid": "uid-5"
+          },
+          {
+            "sourceTag": "span",
+            "type": "custom",
+            "children": [
+              "Watch the panels light up in sequence"
+            ],
+            "properties": {
+              "class": "step-text"
+            },
+            "dataUid": "uid-6"
+          }
+        ],
+        "properties": {
+          "class": "step-row"
+        },
+        "dataUid": "uid-4"
+      },
+      {
+        "type": "container",
+        "sourceTag": "div",
+        "children": [
+          {
+            "sourceTag": "span",
+            "type": "custom",
+            "children": [
+              "2"
+            ],
+            "properties": {
+              "class": "step-num"
+            },
+            "dataUid": "uid-8"
+          },
+          {
+            "sourceTag": "span",
+            "type": "custom",
+            "children": [
+              "Repeat the sequence by selecting the panels"
+            ],
+            "properties": {
+              "class": "step-text"
+            },
+            "dataUid": "uid-9"
+          }
+        ],
+        "properties": {
+          "class": "step-row"
+        },
+        "dataUid": "uid-7"
+      },
+      {
+        "type": "container",
+        "sourceTag": "div",
+        "children": [
+          {
+            "sourceTag": "span",
+            "type": "custom",
+            "children": [
+              "3"
+            ],
+            "properties": {
+              "class": "step-num"
+            },
+            "dataUid": "uid-11"
+          },
+          {
+            "sourceTag": "span",
+            "type": "custom",
+            "children": [
+              "Each round adds one more step"
+            ],
+            "properties": {
+              "class": "step-text"
+            },
+            "dataUid": "uid-12"
+          }
+        ],
+        "properties": {
+          "class": "step-row"
+        },
+        "dataUid": "uid-10"
+      },
+      {
+        "type": "container",
+        "sourceTag": "div",
+        "children": [
+          {
+            "sourceTag": "span",
+            "type": "custom",
+            "children": [
+              "4"
+            ],
+            "properties": {
+              "class": "step-num"
+            },
+            "dataUid": "uid-14"
+          },
+          {
+            "sourceTag": "span",
+            "type": "custom",
+            "children": [
+              "Build combos for bonus points!"
+            ],
+            "properties": {
+              "class": "step-text"
+            },
+            "dataUid": "uid-15"
+          }
+        ],
+        "properties": {
+          "class": "step-row"
+        },
+        "dataUid": "uid-13"
+      },
+      {
+        "sourceTag": "span",
+        "type": "custom",
+        "children": [
+          "CONTROLS"
+        ],
+        "properties": {
+          "class": "controls-title"
+        },
+        "dataUid": "uid-16"
+      },
+      {
+        "type": "container",
+        "sourceTag": "div",
+        "children": [
+          {
+            "sourceTag": "span",
+            "type": "custom",
+            "children": [
+              "VR"
+            ],
+            "properties": {
+              "class": "control-key"
+            },
+            "dataUid": "uid-18"
+          },
+          {
+            "sourceTag": "span",
+            "type": "custom",
+            "children": [
+              "Point laser and pull trigger"
+            ],
+            "properties": {
+              "class": "control-desc"
+            },
+            "dataUid": "uid-19"
+          }
+        ],
+        "properties": {
+          "class": "control-row"
+        },
+        "dataUid": "uid-17"
+      },
+      {
+        "type": "container",
+        "sourceTag": "div",
+        "children": [
+          {
+            "sourceTag": "span",
+            "type": "custom",
+            "children": [
+              "Mouse"
+            ],
+            "properties": {
+              "class": "control-key"
+            },
+            "dataUid": "uid-21"
+          },
+          {
+            "sourceTag": "span",
+            "type": "custom",
+            "children": [
+              "Click on the panels"
+            ],
+            "properties": {
+              "class": "control-desc"
+            },
+            "dataUid": "uid-22"
+          }
+        ],
+        "properties": {
+          "class": "control-row"
+        },
+        "dataUid": "uid-20"
+      },
+      {
+        "type": "container",
+        "sourceTag": "div",
+        "children": [
+          {
+            "sourceTag": "span",
+            "type": "custom",
+            "children": [
+              "1-9"
+            ],
+            "properties": {
+              "class": "control-key"
+            },
+            "dataUid": "uid-24"
+          },
+          {
+            "sourceTag": "span",
+            "type": "custom",
+            "children": [
+              "Select panels by number"
+            ],
+            "properties": {
+              "class": "control-desc"
+            },
+            "dataUid": "uid-25"
+          }
+        ],
+        "properties": {
+          "class": "control-row"
+        },
+        "dataUid": "uid-23"
+      },
+      {
+        "type": "container",
+        "sourceTag": "div",
+        "children": [
+          {
+            "sourceTag": "span",
+            "type": "custom",
+            "children": [
+              "Q / W"
+            ],
+            "properties": {
+              "class": "control-key"
+            },
+            "dataUid": "uid-27"
+          },
+          {
+            "sourceTag": "span",
+            "type": "custom",
+            "children": [
+              "Use power-ups"
+            ],
+            "properties": {
+              "class": "control-desc"
+            },
+            "dataUid": "uid-28"
+          }
+        ],
+        "properties": {
+          "class": "control-row"
+        },
+        "dataUid": "uid-26"
+      },
+      {
+        "type": "container",
+        "sourceTag": "div",
+        "children": [
+          {
+            "sourceTag": "span",
+            "type": "custom",
+            "children": [
+              "ESC"
+            ],
+            "properties": {
+              "class": "control-key"
+            },
+            "dataUid": "uid-30"
+          },
+          {
+            "sourceTag": "span",
+            "type": "custom",
+            "children": [
+              "Pause game"
+            ],
+            "properties": {
+              "class": "control-desc"
+            },
+            "dataUid": "uid-31"
+          }
+        ],
+        "properties": {
+          "class": "control-row"
+        },
+        "dataUid": "uid-29"
+      },
+      {
+        "sourceTag": "span",
+        "type": "custom",
+        "children": [
+          "Earn XP to unlock skins and arena themes!"
+        ],
+        "properties": {
+          "class": "tip-text"
+        },
+        "dataUid": "uid-32"
+      },
+      {
+        "type": "container",
+        "sourceTag": "div",
+        "children": [
+          "GOT IT!"
+        ],
+        "properties": {
+          "id": "btn-tutorial-ok",
+          "class": "tutorial-btn",
+          "cursor": "pointer"
+        },
+        "dataUid": "uid-33"
+      }
+    ],
+    "properties": {
+      "class": "tutorial-panel"
+    },
+    "dataUid": "uid-1"
+  },
+  "classes": {
+    "tutorial-panel": {
+      "content": {
+        "display": "flex",
+        "flexDirection": "column",
+        "alignItems": "center",
+        "padding": "3",
+        "paddingTop": "3.5",
+        "paddingBottom": "3.5",
+        "backgroundColor": "rgba(0, 0, 0, 0.92)",
+        "borderColor": "#4488ff",
+        "borderWidth": "0.15",
+        "borderRadius": 1.5,
+        "gap": "0.8"
+      }
+    },
+    "tutorial-title": {
+      "content": {
+        "fontSize": "3.5",
+        "color": "#4488ff",
+        "fontWeight": "bold"
+      }
+    },
+    "tutorial-subtitle": {
+      "content": {
+        "fontSize": "1.6",
+        "color": "#888888",
+        "paddingBottom": "0.5"
+      }
+    },
+    "step-row": {
+      "content": {
+        "display": "flex",
+        "flexDirection": "row",
+        "width": "90%",
+        "gap": "1",
+        "alignItems": "center",
+        "padding": "0.4"
+      }
+    },
+    "step-num": {
+      "content": {
+        "fontSize": "2",
+        "color": "#00ffff",
+        "fontWeight": "bold"
+      }
+    },
+    "step-text": {
+      "content": {
+        "fontSize": "1.5",
+        "color": "#cccccc"
+      }
+    },
+    "controls-title": {
+      "content": {
+        "fontSize": "2",
+        "color": "#ff00ff",
+        "fontWeight": "bold",
+        "paddingTop": "0.5"
+      }
+    },
+    "control-row": {
+      "content": {
+        "display": "flex",
+        "flexDirection": "row",
+        "width": "90%",
+        "gap": "1",
+        "alignItems": "center",
+        "padding": "0.2"
+      }
+    },
+    "control-key": {
+      "content": {
+        "fontSize": "1.4",
+        "color": "#ffaa00",
+        "fontWeight": "bold"
+      }
+    },
+    "control-desc": {
+      "content": {
+        "fontSize": "1.3",
+        "color": "#aaaaaa"
+      }
+    },
+    "tip-text": {
+      "content": {
+        "fontSize": "1.3",
+        "color": "#00ff44",
+        "paddingTop": "0.3"
+      }
+    },
+    "tutorial-btn": {
+      "content": {
+        "fontSize": "2",
+        "color": "#ffffff",
+        "backgroundColor": "rgba(0, 255, 255, 0.2)",
+        "padding": "0.8",
+        "paddingLeft": "4",
+        "paddingRight": "4",
+        "borderColor": "#00ffff",
+        "borderWidth": "0.1",
+        "borderRadius": 0.5,
+        "cursor": "pointer"
+      }
+    }
+  },
+  "ranges": {
+    "tutorial-panel": {
+      "start": {
+        "line": 1,
+        "column": 2
+      },
+      "end": {
+        "line": 1,
+        "column": 17
+      }
+    },
+    "tutorial-title": {
+      "start": {
+        "line": 14,
+        "column": 2
+      },
+      "end": {
+        "line": 14,
+        "column": 17
+      }
+    },
+    "tutorial-subtitle": {
+      "start": {
+        "line": 19,
+        "column": 2
+      },
+      "end": {
+        "line": 19,
+        "column": 20
+      }
+    },
+    "step-row": {
+      "start": {
+        "line": 24,
+        "column": 2
+      },
+      "end": {
+        "line": 24,
+        "column": 11
+      }
+    },
+    "step-num": {
+      "start": {
+        "line": 32,
+        "column": 2
+      },
+      "end": {
+        "line": 32,
+        "column": 11
+      }
+    },
+    "step-text": {
+      "start": {
+        "line": 37,
+        "column": 2
+      },
+      "end": {
+        "line": 37,
+        "column": 12
+      }
+    },
+    "controls-title": {
+      "start": {
+        "line": 41,
+        "column": 2
+      },
+      "end": {
+        "line": 41,
+        "column": 17
+      }
+    },
+    "control-row": {
+      "start": {
+        "line": 47,
+        "column": 2
+      },
+      "end": {
+        "line": 47,
+        "column": 14
+      }
+    },
+    "control-key": {
+      "start": {
+        "line": 55,
+        "column": 2
+      },
+      "end": {
+        "line": 55,
+        "column": 14
+      }
+    },
+    "control-desc": {
+      "start": {
+        "line": 60,
+        "column": 2
+      },
+      "end": {
+        "line": 60,
+        "column": 15
+      }
+    },
+    "tip-text": {
+      "start": {
+        "line": 64,
+        "column": 2
+      },
+      "end": {
+        "line": 64,
+        "column": 11
+      }
+    },
+    "tutorial-btn": {
+      "start": {
+        "line": 69,
+        "column": 2
+      },
+      "end": {
+        "line": 69,
+        "column": 15
+      }
+    },
+    "uid-1": {
+      "start": {
+        "line": 82,
+        "column": 0
+      },
+      "end": {
+        "line": 124,
+        "column": 6
+      }
+    },
+    "uid-2": {
+      "start": {
+        "line": 83,
+        "column": 2
+      },
+      "end": {
+        "line": 83,
+        "column": 49
+      }
+    },
+    "uid-3": {
+      "start": {
+        "line": 84,
+        "column": 2
+      },
+      "end": {
+        "line": 84,
+        "column": 64
+      }
+    },
+    "uid-4": {
+      "start": {
+        "line": 85,
+        "column": 2
+      },
+      "end": {
+        "line": 88,
+        "column": 8
+      }
+    },
+    "uid-5": {
+      "start": {
+        "line": 86,
+        "column": 4
+      },
+      "end": {
+        "line": 86,
+        "column": 35
+      }
+    },
+    "uid-6": {
+      "start": {
+        "line": 87,
+        "column": 4
+      },
+      "end": {
+        "line": 87,
+        "column": 72
+      }
+    },
+    "uid-7": {
+      "start": {
+        "line": 89,
+        "column": 2
+      },
+      "end": {
+        "line": 92,
+        "column": 8
+      }
+    },
+    "uid-8": {
+      "start": {
+        "line": 90,
+        "column": 4
+      },
+      "end": {
+        "line": 90,
+        "column": 35
+      }
+    },
+    "uid-9": {
+      "start": {
+        "line": 91,
+        "column": 4
+      },
+      "end": {
+        "line": 91,
+        "column": 78
+      }
+    },
+    "uid-10": {
+      "start": {
+        "line": 93,
+        "column": 2
+      },
+      "end": {
+        "line": 96,
+        "column": 8
+      }
+    },
+    "uid-11": {
+      "start": {
+        "line": 94,
+        "column": 4
+      },
+      "end": {
+        "line": 94,
+        "column": 35
+      }
+    },
+    "uid-12": {
+      "start": {
+        "line": 95,
+        "column": 4
+      },
+      "end": {
+        "line": 95,
+        "column": 64
+      }
+    },
+    "uid-13": {
+      "start": {
+        "line": 97,
+        "column": 2
+      },
+      "end": {
+        "line": 100,
+        "column": 8
+      }
+    },
+    "uid-14": {
+      "start": {
+        "line": 98,
+        "column": 4
+      },
+      "end": {
+        "line": 98,
+        "column": 35
+      }
+    },
+    "uid-15": {
+      "start": {
+        "line": 99,
+        "column": 4
+      },
+      "end": {
+        "line": 99,
+        "column": 65
+      }
+    },
+    "uid-16": {
+      "start": {
+        "line": 101,
+        "column": 2
+      },
+      "end": {
+        "line": 101,
+        "column": 46
+      }
+    },
+    "uid-17": {
+      "start": {
+        "line": 102,
+        "column": 2
+      },
+      "end": {
+        "line": 105,
+        "column": 8
+      }
+    },
+    "uid-18": {
+      "start": {
+        "line": 103,
+        "column": 4
+      },
+      "end": {
+        "line": 103,
+        "column": 39
+      }
+    },
+    "uid-19": {
+      "start": {
+        "line": 104,
+        "column": 4
+      },
+      "end": {
+        "line": 104,
+        "column": 66
+      }
+    },
+    "uid-20": {
+      "start": {
+        "line": 106,
+        "column": 2
+      },
+      "end": {
+        "line": 109,
+        "column": 8
+      }
+    },
+    "uid-21": {
+      "start": {
+        "line": 107,
+        "column": 4
+      },
+      "end": {
+        "line": 107,
+        "column": 42
+      }
+    },
+    "uid-22": {
+      "start": {
+        "line": 108,
+        "column": 4
+      },
+      "end": {
+        "line": 108,
+        "column": 57
+      }
+    },
+    "uid-23": {
+      "start": {
+        "line": 110,
+        "column": 2
+      },
+      "end": {
+        "line": 113,
+        "column": 8
+      }
+    },
+    "uid-24": {
+      "start": {
+        "line": 111,
+        "column": 4
+      },
+      "end": {
+        "line": 111,
+        "column": 40
+      }
+    },
+    "uid-25": {
+      "start": {
+        "line": 112,
+        "column": 4
+      },
+      "end": {
+        "line": 112,
+        "column": 61
+      }
+    },
+    "uid-26": {
+      "start": {
+        "line": 114,
+        "column": 2
+      },
+      "end": {
+        "line": 117,
+        "column": 8
+      }
+    },
+    "uid-27": {
+      "start": {
+        "line": 115,
+        "column": 4
+      },
+      "end": {
+        "line": 115,
+        "column": 42
+      }
+    },
+    "uid-28": {
+      "start": {
+        "line": 116,
+        "column": 4
+      },
+      "end": {
+        "line": 116,
+        "column": 51
+      }
+    },
+    "uid-29": {
+      "start": {
+        "line": 118,
+        "column": 2
+      },
+      "end": {
+        "line": 121,
+        "column": 8
+      }
+    },
+    "uid-30": {
+      "start": {
+        "line": 119,
+        "column": 4
+      },
+      "end": {
+        "line": 119,
+        "column": 40
+      }
+    },
+    "uid-31": {
+      "start": {
+        "line": 120,
+        "column": 4
+      },
+      "end": {
+        "line": 120,
+        "column": 48
+      }
+    },
+    "uid-32": {
+      "start": {
+        "line": 122,
+        "column": 2
+      },
+      "end": {
+        "line": 122,
+        "column": 73
+      }
+    },
+    "uid-33": {
+      "start": {
+        "line": 123,
+        "column": 2
+      },
+      "end": {
+        "line": 123,
+        "column": 79
+      }
+    }
+  }
+}

@@ -37,12 +37,12 @@ import {
 
 // ═══════════════════════════════════════════════
 // NEON MEMORY VR — 3D Simon Says Memory Game
-// Round 2: XP, Power-Ups, Challenges, Polish
+// Round 3: Tutorial, Daily Streaks, Performance Ratings, Accessibility
 // ═══════════════════════════════════════════════
 
 // ─── Types & Constants ─────────────────────────
 
-type GameState = 'title' | 'modeselect' | 'difficulty' | 'layout' | 'playing' | 'watching' | 'input' | 'pause' | 'gameover' | 'leaderboard' | 'achievements' | 'settings' | 'help' | 'stats' | 'skins' | 'countdown' | 'challenge';
+type GameState = 'title' | 'modeselect' | 'difficulty' | 'layout' | 'playing' | 'watching' | 'input' | 'pause' | 'gameover' | 'leaderboard' | 'achievements' | 'settings' | 'help' | 'stats' | 'skins' | 'countdown' | 'challenge' | 'tutorial';
 
 interface PanelInfo {
   index: number;
@@ -298,6 +298,11 @@ class GameStateManager {
   powerUpsUsed = 0;
   challengesPlayed = 0;
   challengesCreated = 0;
+  dailyStreak = 0;
+  lastPlayDate = '';
+  bestDailyStreak = 0;
+  tutorialSeen = false;
+  totalGamesWon = 0;
 
   // Session state
   state: GameState = 'title';
@@ -376,6 +381,11 @@ class GameStateManager {
         powerUpsUsed: this.powerUpsUsed,
         challengesPlayed: this.challengesPlayed,
         challengesCreated: this.challengesCreated,
+        dailyStreak: this.dailyStreak,
+        lastPlayDate: this.lastPlayDate,
+        bestDailyStreak: this.bestDailyStreak,
+        tutorialSeen: this.tutorialSeen,
+        totalGamesWon: this.totalGamesWon,
       }));
     } catch {}
   }
@@ -411,6 +421,11 @@ class GameStateManager {
       this.powerUpsUsed = d.powerUpsUsed || 0;
       this.challengesPlayed = d.challengesPlayed || 0;
       this.challengesCreated = d.challengesCreated || 0;
+      this.dailyStreak = d.dailyStreak || 0;
+      this.lastPlayDate = d.lastPlayDate || '';
+      this.bestDailyStreak = d.bestDailyStreak || 0;
+      this.tutorialSeen = d.tutorialSeen || false;
+      this.totalGamesWon = d.totalGamesWon || 0;
     } catch {}
   }
 
@@ -472,6 +487,49 @@ class GameStateManager {
     this.powerUpSlots[slot] = null;
     this.powerUpsUsed++;
     return id;
+  }
+
+  updateDailyStreak(): { streakUpdated: boolean; streakBonus: number } {
+    const today = new Date().toISOString().slice(0, 10);
+    if (this.lastPlayDate === today) {
+      return { streakUpdated: false, streakBonus: 0 };
+    }
+
+    // Check if yesterday was the last play date
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterdayStr = yesterday.toISOString().slice(0, 10);
+
+    if (this.lastPlayDate === yesterdayStr) {
+      this.dailyStreak++;
+    } else {
+      this.dailyStreak = 1;
+    }
+
+    this.lastPlayDate = today;
+    if (this.dailyStreak > this.bestDailyStreak) {
+      this.bestDailyStreak = this.dailyStreak;
+    }
+
+    const streakBonus = Math.min(this.dailyStreak * 25, 500);
+    this.save();
+    return { streakUpdated: true, streakBonus };
+  }
+
+  getPerformanceRating(): { grade: string; label: string; color: string } {
+    const accuracy = this.totalCorrect > 0
+      ? this.totalCorrect / (this.totalCorrect + this.totalWrong)
+      : 0;
+    const levelScore = Math.min(1, this.level / 20);
+    const comboScore = Math.min(1, this.maxCombo / 15);
+    const total = accuracy * 0.4 + levelScore * 0.35 + comboScore * 0.25;
+
+    if (total >= 0.95) return { grade: 'S', label: 'LEGENDARY', color: '#ffaa00' };
+    if (total >= 0.85) return { grade: 'A', label: 'EXCELLENT', color: '#00ffff' };
+    if (total >= 0.70) return { grade: 'B', label: 'GREAT', color: '#00ff44' };
+    if (total >= 0.50) return { grade: 'C', label: 'GOOD', color: '#ffff00' };
+    if (total >= 0.30) return { grade: 'D', label: 'FAIR', color: '#ff8844' };
+    return { grade: 'F', label: 'TRY AGAIN', color: '#ff3344' };
   }
 }
 
@@ -1126,6 +1184,20 @@ function getAchievements(gs: GameStateManager): Achievement[] {
 
     // Welcome
     { id: 'welcome', name: 'Welcome', description: 'Start your first game', check: () => gs.games >= 1 },
+
+    // Daily streak
+    { id: 'streak_days_3', name: 'Three Day Streak', description: 'Play 3 days in a row', check: () => gs.dailyStreak >= 3 },
+    { id: 'streak_days_7', name: 'Weekly Warrior', description: 'Play 7 days in a row', check: () => gs.dailyStreak >= 7 },
+    { id: 'streak_days_14', name: 'Fortnight Focus', description: 'Play 14 days in a row', check: () => gs.dailyStreak >= 14 },
+    { id: 'streak_days_30', name: 'Monthly Master', description: '30-day streak!', check: () => gs.dailyStreak >= 30 },
+
+    // Performance grades
+    { id: 'grade_s', name: 'S-Rank', description: 'Earn an S performance rating', check: () => gs.getPerformanceRating().grade === 'S' },
+    { id: 'grade_a', name: 'A-Rank Player', description: 'Earn an A performance rating', check: () => gs.getPerformanceRating().grade === 'A' || gs.getPerformanceRating().grade === 'S' },
+
+    // Win milestones
+    { id: 'wins_10', name: 'Frequent Winner', description: 'Win 10 games (reach level 5+)', check: () => gs.totalGamesWon >= 10 },
+    { id: 'wins_50', name: 'Serial Winner', description: 'Win 50 games', check: () => gs.totalGamesWon >= 50 },
   ];
 }
 
@@ -1282,6 +1354,22 @@ async function main() {
     const panelHeight = 0.8;
     const skin = PANEL_SKINS[gs.selectedSkin];
 
+    // Unique marker shapes for accessibility (colorblind support)
+    const markerGeos = [
+      new SphereGeometry(0.03, 6, 6),         // 0: sphere
+      new BoxGeometry(0.05, 0.05, 0.05),       // 1: cube
+      new CylinderGeometry(0, 0.04, 0.06, 3),  // 2: triangle/cone
+      new TorusGeometry(0.025, 0.008, 6, 12),  // 3: ring
+      new CylinderGeometry(0.03, 0.03, 0.05, 4), // 4: diamond
+      new CylinderGeometry(0.03, 0.03, 0.05, 6), // 5: hexagon
+      new BoxGeometry(0.06, 0.025, 0.025),      // 6: bar
+      new CylinderGeometry(0.03, 0.03, 0.05, 8), // 7: octagon
+      new BoxGeometry(0.04, 0.04, 0.04),        // 8: rotated cube
+      new CylinderGeometry(0.01, 0.035, 0.05, 4), // 9: pyramid
+      new SphereGeometry(0.02, 4, 4),           // 10: small sphere
+      new TorusGeometry(0.03, 0.01, 4, 8),      // 11: thick ring
+    ];
+
     for (let i = 0; i < count; i++) {
       const angle = (i / count) * Math.PI * 2 - Math.PI / 2;
       const colorIndex = i % PANEL_COLORS.length;
@@ -1322,6 +1410,18 @@ async function main() {
       const edgeMat = new LineBasicMaterial({ color: activeCol, transparent: true, opacity: 0.4 });
       const edgeMesh = new LineSegments(edgesGeo, edgeMat);
       mesh.add(edgeMesh);
+
+      // Add unique shape marker for accessibility
+      const markerGeo = markerGeos[i % markerGeos.length];
+      const markerMat = new MeshBasicMaterial({
+        color: activeCol.clone(),
+        transparent: true,
+        opacity: 0.6,
+      });
+      const marker = new Mesh(markerGeo, markerMat);
+      marker.position.set(0, -panelHeight * 0.3, 0.05);
+      if (i % markerGeos.length === 8) marker.rotation.z = Math.PI / 4; // rotate the cube
+      mesh.add(marker);
 
       panelGroup.add(mesh);
 
@@ -1456,6 +1556,11 @@ async function main() {
   challengeEntity.object3D.position.set(0, 1.6, -2.5);
   challengeEntity.addComponent(PanelUI, { config: '/ui/challenge.json', maxWidth: 0.9, maxHeight: 1.2 });
 
+  // Tutorial
+  const tutorialEntity = world.createTransformEntity(undefined, { persistent: true });
+  tutorialEntity.object3D.position.set(0, 1.6, -2.5);
+  tutorialEntity.addComponent(PanelUI, { config: '/ui/tutorial.json', maxWidth: 0.9, maxHeight: 1.4 });
+
   // ─── UI Helpers ──────────────────────────────
 
   function getDoc(entity: any): UIKitDocument | null {
@@ -1486,10 +1591,11 @@ async function main() {
       stats: statsEntity,
       skins: skinsEntity,
       challenge: challengeEntity,
+      tutorial: tutorialEntity,
     };
     const all = [titleEntity, modeEntity, diffEntity, layoutEntity, pauseEntity,
       gameoverEntity, lbEntity, achEntity, settingsEntity, helpEntity, statsEntity,
-      skinsEntity, challengeEntity];
+      skinsEntity, challengeEntity, tutorialEntity];
 
     for (const e of all) {
       e.object3D.visible = false;
@@ -1594,6 +1700,15 @@ async function main() {
 
     if (gs.isChallenge) {
       gs.challengesPlayed++;
+    }
+
+    // Daily streak tracking
+    const streakResult = gs.updateDailyStreak();
+    if (streakResult.streakUpdated) {
+      if (gs.dailyStreak > 1) {
+        showToast(`${gs.dailyStreak}-day streak! +${streakResult.streakBonus} XP`);
+        gs.awardXP(streakResult.streakBonus);
+      }
     }
 
     createPanels(gs.currentLayout);
@@ -1850,6 +1965,7 @@ async function main() {
     if (gs.score > gs.bestScore) gs.bestScore = gs.score;
     if (gs.level > gs.bestLevel) gs.bestLevel = gs.level;
     if (gs.wrongThisRound === 0 && gs.level > 1) gs.perfectGames++;
+    if (gs.level >= 5) gs.totalGamesWon++;
 
     if (gs.currentMode.name === 'Daily') {
       const today = new Date().toISOString().slice(0, 10);
@@ -1907,11 +2023,16 @@ async function main() {
   function updateGameOver() {
     const doc = getDoc(gameoverEntity);
     if (!doc) return;
+    const rating = gs.getPerformanceRating();
+    setText(doc, 'go-grade', rating.grade);
+    setText(doc, 'go-grade-label', rating.label);
     setText(doc, 'go-score', `${gs.score}`);
+    const endXP = gs.score > 0 ? Math.floor(gs.score / 10) + gs.level * 5 : 0;
+    setText(doc, 'go-xp', `+${endXP} XP`);
     setText(doc, 'go-level', `Level ${gs.level}`);
     setText(doc, 'go-combo', `Best Combo: x${gs.maxCombo}`);
     setText(doc, 'go-accuracy', `Accuracy: ${gs.totalCorrect > 0 ? Math.round(gs.totalCorrect / (gs.totalCorrect + gs.totalWrong) * 100) : 0}%`);
-    setText(doc, 'go-streak', `Best Streak: ${gs.bestStreak}`);
+    setText(doc, 'go-streak', gs.dailyStreak > 0 ? `${gs.dailyStreak} day streak` : 'Start a daily streak!');
     setText(doc, 'go-mode', `${gs.isChallenge ? 'Challenge' : gs.currentMode.name} / ${gs.currentLayout.name}`);
   }
 
@@ -1963,16 +2084,25 @@ async function main() {
     const doc = getDoc(statsEntity);
     if (!doc) return;
     const xp = getXPProgress(gs.totalXP);
+    setText(doc, 'stat-xp-level', `LV ${xp.level} - ${xp.badge}`);
+    setText(doc, 'stat-xp-total', `${gs.totalXP}`);
+    setText(doc, 'stat-streak', gs.dailyStreak > 0 ? `${gs.dailyStreak} days (best: ${gs.bestDailyStreak})` : '0 days');
+    setText(doc, 'stat-ach-count', `${gs.achievements.size}/${getAchievements(gs).length}`);
     setText(doc, 'stat-games', `${gs.games}`);
     setText(doc, 'stat-best-score', `${gs.bestScore}`);
     setText(doc, 'stat-best-level', `${gs.bestLevel}`);
     setText(doc, 'stat-correct', `${gs.totalCorrect}`);
     setText(doc, 'stat-accuracy', `${gs.totalCorrect > 0 ? Math.round(gs.totalCorrect / (gs.totalCorrect + gs.totalWrong) * 100) : 0}%`);
-    setText(doc, 'stat-streak', `${gs.bestStreak}`);
+    setText(doc, 'stat-best-streak', `${gs.bestStreak}`);
+    setText(doc, 'stat-best-combo', `x${gs.maxCombo}`);
     setText(doc, 'stat-perfect', `${gs.perfectGames}`);
     setText(doc, 'stat-panels', `${gs.totalPanelHits}`);
     setText(doc, 'stat-modes', `${gs.modesPlayed.size}/${GAME_MODES.length}`);
-    setText(doc, 'stat-time', `${Math.floor(gs.totalPlayTime / 60)}m`);
+    setText(doc, 'stat-layouts', `${gs.layoutsPlayed.size}/${LAYOUTS.length}`);
+    setText(doc, 'stat-skins', `${gs.skinsUsed.size}/${PANEL_SKINS.length}`);
+    setText(doc, 'stat-challenges', `${gs.challengesPlayed}`);
+    setText(doc, 'stat-powerups', `${gs.powerUpsUsed}`);
+    setText(doc, 'stat-time', `${Math.floor(gs.totalPlayTime / 3600)}h ${Math.floor((gs.totalPlayTime % 3600) / 60)}m`);
   }
 
   function updateSettings() {
@@ -2023,6 +2153,16 @@ async function main() {
     }
   }
 
+  function updateTitleProfile() {
+    const doc = getDoc(titleEntity);
+    if (!doc) return;
+    const xp = getXPProgress(gs.totalXP);
+    setText(doc, 'profile-level', `LV ${xp.level}`);
+    setText(doc, 'profile-badge', xp.badge);
+    setText(doc, 'profile-streak', gs.dailyStreak > 0 ? `${gs.dailyStreak} day streak` : 'No streak');
+    setText(doc, 'profile-ach', `${gs.achievements.size} achievements`);
+  }
+
   // ─── Button Wiring ──────────────────────────
 
   function wireButtons() {
@@ -2045,7 +2185,13 @@ async function main() {
 
     return function wireAll() {
       // Title
-      tryWire(titleEntity, 'btn-play', () => { showPanel('modeselect'); });
+      tryWire(titleEntity, 'btn-play', () => {
+        if (!gs.tutorialSeen) {
+          showPanel('tutorial');
+          return;
+        }
+        showPanel('modeselect');
+      });
       tryWire(titleEntity, 'btn-challenge', () => { updateChallenge(); showPanel('challenge'); });
       tryWire(titleEntity, 'btn-scores', () => { updateLeaderboard(); showPanel('leaderboard'); });
       tryWire(titleEntity, 'btn-achievements', () => { achPage = 0; updateAchievementsPage(); showPanel('achievements'); });
@@ -2086,7 +2232,7 @@ async function main() {
 
       // Game Over
       tryWire(gameoverEntity, 'btn-rematch', () => { startCountdown(); });
-      tryWire(gameoverEntity, 'btn-go-title', () => { showPanel('title'); });
+      tryWire(gameoverEntity, 'btn-go-title', () => { updateTitleProfile(); showPanel('title'); });
 
       // Leaderboard
       tryWire(lbEntity, 'btn-lb-back', () => { showPanel('title'); });
@@ -2192,6 +2338,13 @@ async function main() {
       // Power-up slots
       tryWire(puEntity, 'pu-slot-0', () => { if (gs.state === 'input' || gs.state === 'watching') usePowerUp(0); });
       tryWire(puEntity, 'pu-slot-1', () => { if (gs.state === 'input' || gs.state === 'watching') usePowerUp(1); });
+
+      // Tutorial
+      tryWire(tutorialEntity, 'btn-tutorial-ok', () => {
+        gs.tutorialSeen = true;
+        gs.save();
+        showPanel('modeselect');
+      });
     };
   }
 
@@ -2288,6 +2441,7 @@ async function main() {
   const cameraBasePos = new Vector3(0, 1.6, 0);
 
   showPanel('title');
+  updateTitleProfile();
   toastEntity.object3D.visible = false;
 
   world.onUpdate(() => {

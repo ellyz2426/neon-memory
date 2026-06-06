@@ -8,15 +8,30 @@
     border-color: #ff3344;
     border-width: 0.15;
     border-radius: 1.5;
-    gap: 1;
+    gap: 0.8;
   }
   .go-title {
     font-size: 4;
     color: #ff3344;
     font-weight: bold;
   }
+  .grade-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.5;
+  }
+  .go-grade {
+    font-size: 6;
+    font-weight: bold;
+    color: #ffaa00;
+  }
+  .go-grade-label {
+    font-size: 2;
+    color: #ffaa00;
+  }
   .go-score-label {
-    font-size: 1.5;
+    font-size: 1.3;
     color: #888888;
   }
   .go-score-value {
@@ -24,19 +39,35 @@
     color: #00ffff;
     font-weight: bold;
   }
+  .go-xp {
+    font-size: 1.6;
+    color: #00ff44;
+    font-weight: bold;
+  }
   .go-stat {
-    font-size: 1.5;
+    font-size: 1.4;
     color: #aaaaaa;
   }
   .go-mode {
     font-size: 1.2;
     color: #666666;
   }
+  .go-streak-row {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5;
+    align-items: center;
+  }
+  .go-streak {
+    font-size: 1.4;
+    color: #ff4488;
+    font-weight: bold;
+  }
   .go-btn {
     font-size: 2;
     color: #ffffff;
     background-color: rgba(0, 255, 255, 0.15);
-    padding: 1;
+    padding: 0.8;
     padding-left: 3;
     padding-right: 3;
     border-color: #00ffff;
@@ -54,12 +85,19 @@
 </style>
 <div class="go-panel">
   <span class="go-title">GAME OVER</span>
+  <div class="grade-row">
+    <span id="go-grade" class="go-grade">B</span>
+    <span id="go-grade-label" class="go-grade-label">GREAT</span>
+  </div>
   <span class="go-score-label">SCORE</span>
   <span id="go-score" class="go-score-value">0</span>
+  <span id="go-xp" class="go-xp">+0 XP</span>
   <span id="go-level" class="go-stat">Level 1</span>
   <span id="go-combo" class="go-stat">Best Combo: x0</span>
   <span id="go-accuracy" class="go-stat">Accuracy: 0%</span>
-  <span id="go-streak" class="go-stat">Best Streak: 0</span>
+  <div class="go-streak-row">
+    <span id="go-streak" class="go-streak">0 day streak</span>
+  </div>
   <span id="go-mode" class="go-mode">Classic / Hexagon</span>
   <div id="btn-rematch" class="go-btn" cursor="pointer">REMATCH</div>
   <div id="btn-go-title" class="go-btn title-btn" cursor="pointer">TITLE</div>
